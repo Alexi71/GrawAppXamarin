@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrawApp", "GrawApp\GrawApp.csproj", "{FF1F77BE-22C0-4E47-9838-446C1DA356AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Release|iPhone.ActiveCfg = Release|iPhone
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Release|iPhone.Build.0 = Release|iPhone
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{FF1F77BE-22C0-4E47-9838-446C1DA356AA}.Debug|iPhone.Build.0 = Debug|iPhone
+	EndGlobalSection
+EndGlobal
