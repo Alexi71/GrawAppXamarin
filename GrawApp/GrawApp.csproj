@@ -114,6 +114,7 @@
     <Folder Include="View\" />
     <Folder Include="Model\" />
     <Folder Include="Controller\" />
+    <Folder Include="Database\" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -153,6 +154,10 @@
     </Compile>
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="SQLite.cs" />
+    <Compile Include="Database\Users.cs" />
+    <Compile Include="Database\DatabaseHelper.cs" />
+    <Compile Include="Database\Station.cs" />
+    <Compile Include="Database\UserStation.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
