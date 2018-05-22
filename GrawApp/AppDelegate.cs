@@ -2,6 +2,10 @@
 using UIKit;
 using Firebase.Core;
 using Xamarin.SWRevealViewController;
+using GrawApp.Database;
+using System.Collections.Generic;
+using GrawApp.Model;
+
 namespace GrawApp
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the
@@ -10,6 +14,10 @@ namespace GrawApp
     public class AppDelegate : UIApplicationDelegate
     {
         // class-level declarations
+
+        public Station ActiveStation { get; set; }
+        public List<InputData> ProfileData { get; set; }
+        public FlightContent CurrentFlight { get; set; }
 
         public override UIWindow Window
         {
@@ -23,6 +31,8 @@ namespace GrawApp
             // If not required for your application you can safely delete this method
             App.Configure();
             FrontViewPosition pos = FrontViewPosition.Left;
+            UIApplication.SharedApplication.StatusBarStyle = UIStatusBarStyle.LightContent;
+            UINavigationBar.Appearance.Translucent = false;
             return true;
         }
 

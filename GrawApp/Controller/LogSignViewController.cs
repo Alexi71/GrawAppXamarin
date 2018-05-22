@@ -4,6 +4,7 @@ using UIKit;
 using Firebase.Auth;
 using GrawApp.Database;
 using System.Linq;
+using Xamarin.SWRevealViewController;
 
 namespace GrawApp
 {
@@ -51,15 +52,23 @@ namespace GrawApp
                     if(ActiveStation != null)
                     {
 
+                        var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+                        appDelegate.ActiveStation = ActiveStation;
+
                         var storyboard = UIStoryboard.FromName("Main", null);
                         var nc = storyboard.InstantiateViewController("StationNavigation") as UINavigationController;
+                        this.RevealViewController().PushFrontViewController(nc, true);
+                    }
+                    else
+                    {
+                        
+                        var storyboard = UIStoryboard.FromName("Main", null);
+                        var nc = storyboard.InstantiateViewController("addStationNavigation") as UINavigationController;
 
                         //var vc = nc.TopViewController as StationViewController;
                         //    vc.activeStation = self.activeStation
 
-
-                            let rvc:SWRevealViewController = self.revealViewController() as SWRevealViewController
-                            rvc.pushFrontViewController(nc, animated: true)
+                        this.RevealViewController().PushFrontViewController(nc, true);
                     }
 
                 }
@@ -72,15 +81,7 @@ namespace GrawApp
 
         private Station GetActiveStation()
         {
-            var list = DatabaseHelper.Read<UserStation>();
-            if(list != null)
-            {
-                var result = list.FirstOrDefault(x => x.User.UserId == Auth.DefaultInstance.CurrentUser.Uid &&
-                                                  x.IsDefault);
-                return result.Station;
-            }
-            return null;
-
+            return DatabaseHelper.GetDefaultStation(Auth.DefaultInstance.CurrentUser.Uid);
         }
 
         private void ShowError(string errorText)

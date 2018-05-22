@@ -11,27 +11,27 @@ using UIKit;
 
 namespace GrawApp
 {
-    [Register ("BackViewController")]
-    partial class BackViewController
+    [Register ("NewStationViewController")]
+    partial class NewStationViewController
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIView backView { get; set; }
+        UIKit.UIBarButtonItem MenuButton { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITableView tableView { get; set; }
+        UIKit.UISearchBar SearchBar { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
-            if (backView != null) {
-                backView.Dispose ();
-                backView = null;
+            if (MenuButton != null) {
+                MenuButton.Dispose ();
+                MenuButton = null;
             }
 
-            if (tableView != null) {
-                tableView.Dispose ();
-                tableView = null;
+            if (SearchBar != null) {
+                SearchBar.Dispose ();
+                SearchBar = null;
             }
         }
     }

@@ -1,4 +1,7 @@
 ﻿using System;
+using SQLite;
+using SQLite.Net.Attributes;
+
 namespace GrawApp.Database
 {
     public class UserStation
@@ -6,10 +9,10 @@ namespace GrawApp.Database
         public UserStation()
         {
         }
-
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public Users User { get; set; }
-        public Station Station { get; set; }
+        public string UserKey { get; set; }
+        public string StationKey { get; set; }
         public bool IsDefault { get; set; }
     }
 }
