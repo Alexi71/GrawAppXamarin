@@ -8,21 +8,13 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 
-namespace GrawApp
+namespace GrawApp.View
 {
-    [Register ("PathViewController")]
-    partial class PathViewController
+    [Register ("PageTwoController")]
+    partial class PageTwoController
     {
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        MapKit.MKMapView mapView { get; set; }
-
         void ReleaseDesignerOutlets ()
         {
-            if (mapView != null) {
-                mapView.Dispose ();
-                mapView = null;
-            }
         }
     }
 }
