@@ -27,6 +27,7 @@ namespace GrawApp
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("OTYwM0AzMTM2MmUzMjJlMzBjMm1DVUdEakRPdXBBOS9zditSMEVIZ0Zrclg0OUdob2t6YXRxNFEzNkU0PQ==");
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             App.Configure();
