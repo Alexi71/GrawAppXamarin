@@ -15,7 +15,7 @@ namespace GrawApp.View
         {
         }
 
-        public RawPageViewController() : base()
+        public RawPageViewController() : base(UIPageViewControllerTransitionStyle.Scroll, UIPageViewControllerNavigationOrientation.Horizontal)
         {
             
         }
