@@ -14,20 +14,25 @@ namespace GrawApp.FirebaseHelper
         {
 
             var storage = Storage.DefaultInstance;
-            var urlDeleted = storage.GetReferenceFromUrl(data.Url);
-            urlDeleted.Delete((error) => {
-                if (error != null)
-                {
-                    // Uh-oh, an error occurred!
-                    Console.WriteLine($"Delete file :{data.Url} failed");
-                }
-                else
-                {
-                    // File deleted successfully
-                    Console.WriteLine($"Delete file :{data.Url} was successfully");
-                }
-            });
+            if (!string.IsNullOrEmpty(data.Url))
+            {
 
+
+                var urlDeleted = storage.GetReferenceFromUrl(data.Url);
+                urlDeleted.Delete((error) =>
+                {
+                    if (error != null)
+                    {
+                        // Uh-oh, an error occurred!
+                        Console.WriteLine($"Delete file :{data.Url} failed");
+                    }
+                    else
+                    {
+                        // File deleted successfully
+                        Console.WriteLine($"Delete file :{data.Url} was successfully");
+                    }
+                });
+            }
             if (!string.IsNullOrEmpty(data.Url100))
             {
                 var url100Deleted = storage.GetReferenceFromUrl(data.Url100);

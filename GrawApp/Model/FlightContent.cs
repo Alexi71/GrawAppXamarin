@@ -11,7 +11,7 @@ namespace GrawApp.Model
         public string Url100 { get; set; }
         public string UrlEnd { get; set; }
         public bool IsRealTimeFlight { get; set; }
-
+        public double EpochTime { get; set; }
        
 
         public FlightContent()

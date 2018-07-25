@@ -276,6 +276,8 @@
     <Compile Include="View\PageTwoController.designer.cs">
       <DependentUpon>PageTwoController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DatePickerDialog.cs" />
+    <Compile Include="Helper\ExtentionsLib.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
@@ -306,6 +308,11 @@
     <BundleResource Include="Resources\tstorm3.png" />
     <BundleResource Include="Resources\Wetter_500px_72dpi.jpg" />
     <BundleResource Include="GoogleService-Info.plist" />
+    <BundleResource Include="Resources\icons8-kalender-50.png" />
+    <BundleResource Include="Resources\icons8-kalender-50-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helper\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.6\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.6\build\Xamarin.Build.Download.targets')" />

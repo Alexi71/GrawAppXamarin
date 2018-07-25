@@ -14,11 +14,15 @@ using Firebase.Database;
 using GrawApp.Controller;
 using Syncfusion.SfBusyIndicator.iOS;
 using System.Linq;
+using GrawApp.Helper;
 
 namespace GrawApp
 {
     public partial class StationInformationViewController : UIViewController
     {
+
+
+        NSUserDefaults _plist;
         string WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
         string APP_ID = "e72ca729af228beabd5d20e3b7749713";
         //WeatherData WeatherInformation;
@@ -26,7 +30,10 @@ namespace GrawApp
         public Station ActiveStation { get; private set; }
         TableSourceStationInformation TableSource = new TableSourceStationInformation();
         public SFBusyIndicator BusyIndicator { get; set; }
-        public UITableView TableView { get { return tableView; }}
+        public UITableView TableView { get { return tableView; } }
+
+        DateTime _startTime;
+        DateTime _endTime;
         public StationInformationViewController(IntPtr handle) : base(handle)
         {
         }
@@ -35,11 +42,27 @@ namespace GrawApp
         {
             base.ViewDidLoad();
 
+            _plist = NSUserDefaults.StandardUserDefaults;
+            var startDateEpoch = _plist.DoubleForKey("startDate");
+            var endDateEpoch = _plist.DoubleForKey("endDate");
+
+            if(startDateEpoch > 0.0 && endDateEpoch > 0.0)
+            {
+                _startTime = startDateEpoch.FromUnixTime();
+                _endTime = endDateEpoch.FromUnixTime();
+            }
+            else
+            {
+                _startTime = DateTime.Now.AddDays(-7);
+                _endTime = DateTime.Now.AddDays(2);
+            }
+            timeLabel.Text = $"{_startTime.ToShortDateString()}-{_endTime.ToShortDateString()}";
+
             BusyIndicator = new SFBusyIndicator()
             {
                 Frame = View.Frame,
                 Opaque = true,
-                BackgroundColor = new UIColor(255f/255f, 255f / 255f, 255f / 255f, 0.5f),
+                BackgroundColor = new UIColor(255f / 255f, 255f / 255f, 255f / 255f, 0.5f),
                 AnimationType = SFBusyIndicatorAnimationType.SFBusyIndicatorAnimationTypeSlicedCircle,
                 Title = (NSString)"Loading...",
                 ViewBoxWidth = 80,
@@ -47,7 +70,7 @@ namespace GrawApp
                 Foreground = UIColor.Gray,
                 Duration = 2,
                 IsBusy = true,
-                Hidden = false
+                Hidden = true
             };
 
             View.AddSubview(BusyIndicator);
@@ -74,6 +97,8 @@ namespace GrawApp
 
 
         }
+
+
 
         public void UpdateTableView()
         {
@@ -115,37 +140,18 @@ namespace GrawApp
 
         void InitializeDatabase()
         {
+            BusyIndicator.Hidden = false;
+            TableSource.FlightList.Clear();
+            tableView.ReloadData();
             var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
-            var childNode = rootNode.GetChild("station").GetChild(ActiveStation.Key).GetChild("flights");
+            var childNode = rootNode.GetChild("station").GetChild(ActiveStation.Key).GetChild("flights")
+                                    .GetQueryOrderedByChild("EpochTime")
+                                    .GetQueryStartingAtValue(NSObject.FromObject(_startTime.GetUnixEpoch()))
+                                    .GetQueryEndingAtValue(NSObject.FromObject(_endTime.GetUnixEpoch()));
+            
             var referenceNode = childNode.ObserveEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
             {
-                var data = snapshot.GetValue<NSDictionary>();
-                Console.WriteLine(snapshot.Key);
-                FlightContent flightData = new FlightContent();
-                flightData.Key = snapshot.Key;
-                if (data["Date"] != null)
-                    flightData.Date = Convert.ToString(data["Date"]);
-                if (data["Time"] != null)
-                    flightData.Time = Convert.ToString(data["Time"]);
-                if (data["FileName"] != null)
-                    flightData.FileName = Convert.ToString(data["FileName"]);
-                if (data["Url"] != null)
-                    flightData.Url = Convert.ToString(data["Url"]);
-                if (data["Url100"] != null)
-                    flightData.Url100 = Convert.ToString(data["Url100"]);
-                if (data["UrlEnd"] != null)
-                    flightData.UrlEnd = Convert.ToString(data["UrlEnd"]);
-                if (data["IsRealTimeDataAvailable"] != null)
-                {
-                    if( data["IsRealTimeDataAvailable"] is NSNumber)
-                    {
-                        var x = (NSNumber)data["IsRealTimeDataAvailable"];
-                        var ob = x.BoolValue;
-                        flightData.IsRealTimeFlight = Convert.ToBoolean(ob);
-                    }
-
-
-                }
+                var flightData = GetFlightDataFromSnapshot(snapshot);
                 InvokeOnMainThread(() =>
                 {
                     TableSource.FlightList.Add(flightData);
@@ -156,39 +162,26 @@ namespace GrawApp
                 });
             });
 
+            var changeNode = childNode.ObserveEvent(DataEventType.Value, (snapshot, prevKey) =>
+            {
+                if (snapshot == null || !snapshot.HasChildren)
+                {
+                    InvokeOnMainThread(() =>
+                    {
+                        BusyIndicator.Hidden = true;
+                        Console.WriteLine("Flight added");
+                    });
+                }
+            });
+
 
             var deleteNode = childNode.ObserveEvent(DataEventType.ChildRemoved, (snapshot, prevKey) =>
             {
-                var data = snapshot.GetValue<NSDictionary>();
-                Console.WriteLine(snapshot.Key);
-                FlightContent flightData = new FlightContent();
-                flightData.Key = snapshot.Key;
-                if (data["Date"] != null)
-                    flightData.Date = Convert.ToString(data["Date"]);
-                if (data["Time"] != null)
-                    flightData.Time = Convert.ToString(data["Time"]);
-                if (data["FileName"] != null)
-                    flightData.FileName = Convert.ToString(data["FileName"]);
-                if (data["Url"] != null)
-                    flightData.Url = Convert.ToString(data["Url"]);
-                if (data["Url100"] != null)
-                    flightData.Url100 = Convert.ToString(data["Url100"]);
-                if (data["UrlEnd"] != null)
-                    flightData.UrlEnd = Convert.ToString(data["UrlEnd"]);
-                if (data["IsRealTimeDataAvailable"] != null)
-                {
-                    if (data["IsRealTimeDataAvailable"] is NSNumber)
-                    {
-                        var x = (NSNumber)data["IsRealTimeDataAvailable"];
-                        var ob = x.BoolValue;
-                        flightData.IsRealTimeFlight = Convert.ToBoolean(ob);
-                    }
-
-
-                }
+                var flightData = GetFlightDataFromSnapshot(snapshot);
                 var index = TableSource.FlightList.FindIndex(x => x.Key == flightData.Key);
-                InvokeOnMainThread(() => {
-                    TableSource.FlightList.RemoveAt(index);
+                InvokeOnMainThread(() =>
+                {
+                    //TableSource.FlightList.RemoveAt(index);
                     //tableView.BeginUpdates();
                     tableView.ReloadData();
                     View.SetNeedsDisplay();
@@ -196,8 +189,50 @@ namespace GrawApp
                     BusyIndicator.Hidden = true;
                     Console.WriteLine("Flight deleted");
                 });
-               
+
             });
+        }
+
+        private  FlightContent GetFlightDataFromSnapshot(DataSnapshot snapshot)
+        {
+            var data = snapshot.GetValue<NSDictionary>();
+            Console.WriteLine(snapshot.Key);
+            FlightContent flightData = new FlightContent();
+            flightData.Key = snapshot.Key;
+            if (data["Date"] != null)
+                flightData.Date = Convert.ToString(data["Date"]);
+            if (data["Time"] != null)
+                flightData.Time = Convert.ToString(data["Time"]);
+            if (data["FileName"] != null)
+                flightData.FileName = Convert.ToString(data["FileName"]);
+            if (data["Url"] != null)
+                flightData.Url = Convert.ToString(data["Url"]);
+            if (data["Url100"] != null)
+                flightData.Url100 = Convert.ToString(data["Url100"]);
+            if (data["UrlEnd"] != null)
+                flightData.UrlEnd = Convert.ToString(data["UrlEnd"]);
+            if (data["IsRealTimeDataAvailable"] != null)
+            {
+                if (data["IsRealTimeDataAvailable"] is NSNumber)
+                {
+                    var x = (NSNumber)data["IsRealTimeDataAvailable"];
+                    var ob = x.BoolValue;
+                    flightData.IsRealTimeFlight = Convert.ToBoolean(ob);
+                }
+
+
+            }
+            if (data["EpochTime"] != null)
+            {
+                if (data["EpochTime"] is NSNumber)
+                {
+                    var x = (NSNumber)data["EpochTime"];
+                    var ob = x.DoubleValue;
+                    flightData.EpochTime = Convert.ToDouble(ob);
+                }
+            }
+
+            return flightData;
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
@@ -207,7 +242,7 @@ namespace GrawApp
             //var viewController = (StationDataTabBarController)segue.DestinationViewController;
             //if(viewController != null)
             //{
-                
+
             //}
 
         }
@@ -287,6 +322,39 @@ namespace GrawApp
             cityLabel.Text = data.City;
         }
         #endregion
+
+        #region Calendar
+        partial void calendarButtonTapped(UIKit.UIButton sender)
+        {
+            Console.WriteLine("Calendar Tapped");
+            var startTime = _startTime;
+            var dialog = new DatePickerDialog();
+            dialog.Show("Start date", "Done", "Cancel", UIDatePickerMode.Date, (dt)=>{
+
+                _startTime = dt;
+                var endDialog = new DatePickerDialog();
+                endDialog.Show("End date", "Done", "Cancel", UIDatePickerMode.Date, (endTime) => {
+
+                    _endTime = endTime;
+                    if(_startTime > _endTime)
+                    {
+                        _endTime = _startTime.AddDays(7);
+                    }
+                    timeLabel.Text = $"{_startTime.ToShortDateString()}-{_endTime.ToShortDateString()}";
+                    _plist.SetDouble(_startTime.GetUnixEpoch(), "startDate");
+                    _plist.SetDouble(_endTime.GetUnixEpoch(), "endDate");
+
+                     InitializeDatabase();
+
+
+                }, _endTime);
+
+            }, startTime);
+        }
+        #endregion
+
+
+
     }
     #region Table Source
     internal class TableSourceStationInformation : UITableViewSource
