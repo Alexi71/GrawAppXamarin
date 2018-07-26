@@ -371,7 +371,9 @@ namespace GrawApp
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell("cellId") as UITableViewCell;
-            cell.TextLabel.Text = $"{FlightList[indexPath.Row].Date}  {FlightList[indexPath.Row].Time}";
+
+            cell.TextLabel.Text = $"Date: {FlightList[indexPath.Row].EpochTime.FromUnixTime():dd.MM.yyyy}";//  {FlightList[indexPath.Row].Time}";
+            cell.DetailTextLabel.Text = $"Time: {FlightList[indexPath.Row].EpochTime.FromUnixTime():HH:mm} UTC";
             if(FlightList[indexPath.Row].IsRealTimeFlight)
             {
                 cell.TextLabel.TextColor = UIColor.Red;
