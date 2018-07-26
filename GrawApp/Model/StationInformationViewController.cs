@@ -144,10 +144,10 @@ namespace GrawApp
             TableSource.FlightList.Clear();
             tableView.ReloadData();
             var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
-            var childNode = rootNode.GetChild("station").GetChild(ActiveStation.Key).GetChild("flights")
-                                    .GetQueryOrderedByChild("EpochTime")
+            var childNode = rootNode.GetChild("station").GetChild(ActiveStation.Key).GetChild("flights");
+                                   /* .GetQueryOrderedByChild("EpochTime")
                                     .GetQueryStartingAtValue(NSObject.FromObject(_startTime.GetUnixEpoch()))
-                                    .GetQueryEndingAtValue(NSObject.FromObject(_endTime.GetUnixEpoch()));
+                                    .GetQueryEndingAtValue(NSObject.FromObject(_endTime.GetUnixEpoch()));*/
             
             var referenceNode = childNode.ObserveEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
             {

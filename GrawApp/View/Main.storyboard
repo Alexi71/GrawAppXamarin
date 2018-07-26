@@ -321,7 +321,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="equalSpacing" alignment="center" spacing="5" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WdE-gc-AGQ">
                                                         <rect key="frame" x="0.0" y="0.0" width="40" height="65.333333333333329"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c9s-xy-9oP">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="003-history-clock-button.png" translatesAutoresizingMaskIntoConstraints="NO" id="c9s-xy-9oP">
                                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="40" id="1mz-MO-9Tn"/>
@@ -344,7 +344,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="SKS-XG-bOD">
                                                         <rect key="frame" x="107.33333333333334" y="0.0" width="100" height="65.333333333333329"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cnU-qI-wUb">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="003-history-clock-button.png" translatesAutoresizingMaskIntoConstraints="NO" id="cnU-qI-wUb">
                                                                 <rect key="frame" x="30" y="0.0" width="40" height="40"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="40" id="Kxh-vs-wPf"/>
@@ -365,7 +365,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="kjL-D0-HwV">
                                                         <rect key="frame" x="247.33333333333334" y="0.0" width="95.333333333333343" height="65.333333333333329"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v9H-xX-p5T">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="003-history-clock-button.png" translatesAutoresizingMaskIntoConstraints="NO" id="v9H-xX-p5T">
                                                                 <rect key="frame" x="27.666666666666671" y="0.0" width="40" height="40"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="40" id="ak6-6U-miN"/>
@@ -456,6 +456,79 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hvs-pW-gTd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2802.4000000000001" y="3691.3043478260875"/>
+        </scene>
+        <!--Raw Value Table View Controller-->
+        <scene sceneID="Eb1-YR-3ng">
+            <objects>
+                <tableViewController id="OZB-2P-sdm" customClass="RawValueTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Chq-Sp-xOs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="87" id="Rnr-PV-RfK" customClass="CustomRawCell">
+                                <rect key="frame" x="0.0" y="28" width="375" height="87"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rnr-PV-RfK" id="JP8-6e-7Hq">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="86.666666666666671"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XyQ-ND-AWD">
+                                            <rect key="frame" x="0.0" y="0.0" width="192.66666666666666" height="80.333333333333329"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JEr-Y5-aMH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="80.333333333333329"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="VCb-Py-9cu"/>
+                                                        <constraint firstAttribute="height" constant="80" id="lVc-7S-Qdv"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="kHH-bb-Ncc">
+                                                    <rect key="frame" x="90" y="4.6666666666666643" width="102.66666666666669" height="71"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pressure" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JWB-ed-y6z">
+                                                            <rect key="frame" x="0.0" y="0.0" width="102.66666666666667" height="34.333333333333336"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="25"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 mB" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47a-Th-jtw">
+                                                            <rect key="frame" x="0.0" y="39.333333333333336" width="102.66666666666667" height="31.666666666666664"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="23"/>
+                                                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="JEr-Y5-aMH" firstAttribute="top" secondItem="XyQ-ND-AWD" secondAttribute="top" id="Mnm-of-3JV"/>
+                                                <constraint firstItem="JEr-Y5-aMH" firstAttribute="leading" secondItem="XyQ-ND-AWD" secondAttribute="leading" id="sDm-Gc-Kao"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="XyQ-ND-AWD" firstAttribute="top" secondItem="JP8-6e-7Hq" secondAttribute="top" id="9lU-HA-GbE"/>
+                                        <constraint firstItem="XyQ-ND-AWD" firstAttribute="leading" secondItem="JP8-6e-7Hq" secondAttribute="leading" id="OXs-cX-WrY"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="HeaderLabel" destination="JWB-ed-y6z" id="d9R-QM-e4R"/>
+                                    <outlet property="ImageView" destination="JEr-Y5-aMH" id="iKm-0s-hxT"/>
+                                    <outlet property="ValueLabel" destination="47a-Th-jtw" id="jz5-4W-wCX"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="OZB-2P-sdm" id="6Dt-cx-7Wd"/>
+                            <outlet property="delegate" destination="OZB-2P-sdm" id="GAA-iG-pCO"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="naA-bZ-E3Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2762.4000000000001" y="4343.3497536945815"/>
         </scene>
         <!--Page Two Controller-->
         <scene sceneID="tjk-ES-Sjz">
@@ -971,6 +1044,7 @@
     <resources>
         <image name="002-settings" width="16" height="16"/>
         <image name="002-settings.png" width="24" height="24"/>
+        <image name="003-history-clock-button.png" width="24" height="24"/>
         <image name="006-add.png" width="24" height="24"/>
         <image name="007-exit.png" width="24" height="24"/>
         <image name="Wetterstation_500px_72dpi.jpg" width="500" height="524"/>

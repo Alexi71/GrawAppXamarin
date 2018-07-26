@@ -278,6 +278,15 @@
     </Compile>
     <Compile Include="Helper\DatePickerDialog.cs" />
     <Compile Include="Helper\ExtentionsLib.cs" />
+    <Compile Include="View\RawValueTableViewController.cs" />
+    <Compile Include="View\RawValueTableViewController.designer.cs">
+      <DependentUpon>RawValueTableViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\CustomRawCell.cs" />
+    <Compile Include="View\CustomRawCell.designer.cs">
+      <DependentUpon>CustomRawCell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RawDataValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
