@@ -5,7 +5,7 @@ using System;
 using Foundation;
 using UIKit;
 
-namespace GrawApp.View
+namespace GrawApp.Controller.Raw
 {
 	public partial class PageTwoController : UIViewController
 	{

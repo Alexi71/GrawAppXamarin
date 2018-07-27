@@ -1,10 +1,11 @@
 // WARNING
 //
-// This file has been generated automatically by Visual Studio to store outlets and
-// actions made in the UI designer. If it is removed, they will be lost.
-// Manual changes to this file may not be handled correctly.
+// This file has been generated automatically by Visual Studio from the outlets and
+// actions declared in your storyboard file.
+// Manual changes to this file will not be maintained.
 //
 using Foundation;
+using System;
 using System.CodeDom.Compiler;
 
 namespace GrawApp
@@ -25,10 +26,6 @@ namespace GrawApp
         MapKit.MKMapView mapView { get; set; }
 
         [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIBarButtonItem menuButton { get; set; }
-
-        [Outlet]
         UIKit.UITableView tableView { get; set; }
 
         [Outlet]
@@ -40,11 +37,20 @@ namespace GrawApp
         [Outlet]
         UIKit.UIImageView weatherImage { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIBarButtonItem menuButton { get; set; }
+
         [Action ("calendarButtonTapped:")]
         partial void calendarButtonTapped (UIKit.UIButton sender);
-        
+
         void ReleaseDesignerOutlets ()
         {
+            if (calendarButton != null) {
+                calendarButton.Dispose ();
+                calendarButton = null;
+            }
+
             if (cityLabel != null) {
                 cityLabel.Dispose ();
                 cityLabel = null;
@@ -53,6 +59,11 @@ namespace GrawApp
             if (mapView != null) {
                 mapView.Dispose ();
                 mapView = null;
+            }
+
+            if (menuButton != null) {
+                menuButton.Dispose ();
+                menuButton = null;
             }
 
             if (tableView != null) {
@@ -65,29 +76,14 @@ namespace GrawApp
                 temperatureLabel = null;
             }
 
-            if (weatherImage != null) {
-                weatherImage.Dispose ();
-                weatherImage = null;
-            }
-
-            if (menuButton != null) {
-                menuButton.Dispose ();
-                menuButton = null;
-            }
-
-            if (calendarImage != null) {
-                calendarImage.Dispose ();
-                calendarImage = null;
-            }
-
             if (timeLabel != null) {
                 timeLabel.Dispose ();
                 timeLabel = null;
             }
 
-            if (calendarButton != null) {
-                calendarButton.Dispose ();
-                calendarButton = null;
+            if (weatherImage != null) {
+                weatherImage.Dispose ();
+                weatherImage = null;
             }
         }
     }

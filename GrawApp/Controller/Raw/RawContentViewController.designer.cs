@@ -8,7 +8,7 @@ using Foundation;
 using System;
 using System.CodeDom.Compiler;
 
-namespace GrawApp.View
+namespace GrawApp.Controller.Raw
 {
     [Register ("RawContentViewController")]
     partial class RawContentViewController

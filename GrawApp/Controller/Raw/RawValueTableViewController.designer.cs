@@ -10,8 +10,8 @@ using System.CodeDom.Compiler;
 
 namespace GrawApp.Controller.Raw
 {
-    [Register ("RawPageViewController")]
-    partial class RawPageViewController
+    [Register ("RawValueTableViewController")]
+    partial class RawValueTableViewController
     {
         void ReleaseDesignerOutlets ()
         {

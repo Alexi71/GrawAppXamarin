@@ -7,20 +7,20 @@ using UIKit;
 
 namespace GrawApp.Controller.Raw
 {
-	public partial class PageOneViewController : UIViewController
+	public partial class RawValueTableViewController : UITableViewController
 	{
-		public PageOneViewController (IntPtr handle) : base (handle)
+		public RawValueTableViewController (IntPtr handle) : base (handle)
 		{
 		}
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            TableView.Source = new RawValueTableViewSource();
+            //TableView.Source = new RawValueTableViewSource();
         }
     }
 
-    internal class RawValueTableViewSource : UITableViewSource
+   /* internal class RawValueTableViewSource : UITableViewSource
     {
         RawDataRepository DataRepository;
         public RawValueTableViewSource()
@@ -31,7 +31,7 @@ namespace GrawApp.Controller.Raw
         {
             var cell = tableView.DequeueReusableCell("rawData") as CustomRawCell;
             var item = DataRepository.GetItem(indexPath.Row);
-            if (item != null)
+            if(item != null)
             {
                 cell.HeaderLabelOutlet.Text = item.HeaderName;
                 cell.ImageView.Image = new UIImage(item.ImageName);
@@ -44,5 +44,5 @@ namespace GrawApp.Controller.Raw
         {
             return DataRepository.DataList.Count;
         }
-    }
+    }*/
 }

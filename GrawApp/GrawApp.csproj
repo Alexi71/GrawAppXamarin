@@ -278,15 +278,16 @@
     </Compile>
     <Compile Include="Helper\DatePickerDialog.cs" />
     <Compile Include="Helper\ExtentionsLib.cs" />
-    <Compile Include="View\RawValueTableViewController.cs" />
-    <Compile Include="View\RawValueTableViewController.designer.cs">
+    <Compile Include="Model\RawDataValue.cs" />
+    <Compile Include="Controller\Raw\RawValueTableViewController.cs" />
+    <Compile Include="Controller\Raw\RawValueTableViewController.designer.cs">
       <DependentUpon>RawValueTableViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\CustomRawCell.cs" />
-    <Compile Include="View\CustomRawCell.designer.cs">
+    <Compile Include="Controller\Raw\CustomRawCell.cs" />
+    <Compile Include="Controller\Raw\CustomRawCell.designer.cs">
       <DependentUpon>CustomRawCell.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\RawDataValue.cs" />
+    <Compile Include="Controller\Raw\RawDataRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
@@ -319,6 +320,16 @@
     <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\icons8-kalender-50.png" />
     <BundleResource Include="Resources\icons8-kalender-50-white.png" />
+    <BundleResource Include="Resources\g5_status_32x32_gelb.png" />
+    <BundleResource Include="Resources\g5_status_32x32_grau.png" />
+    <BundleResource Include="Resources\g5_status_32x32_gruen.png" />
+    <BundleResource Include="Resources\g5_status_32x32_rot.png" />
+    <BundleResource Include="Resources\icons8_fan_filled_50.png" />
+    <BundleResource Include="Resources\icons8_pressure_filled_50.png" />
+    <BundleResource Include="Resources\icons8_temperature_48.png" />
+    <BundleResource Include="Resources\icons8_water_50.png" />
+    <BundleResource Include="Resources\icons8_windsock_filled_50.png" />
+    <BundleResource Include="Resources\vertical_double_arrow.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\" />
