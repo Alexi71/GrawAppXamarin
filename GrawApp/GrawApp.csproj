@@ -288,6 +288,7 @@
       <DependentUpon>CustomRawCell.cs</DependentUpon>
     </Compile>
     <Compile Include="Controller\Raw\RawDataRepository.cs" />
+    <Compile Include="Model\RawData.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
