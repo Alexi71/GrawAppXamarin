@@ -4,13 +4,15 @@ using System;
 using System.Collections.Generic;
 using CoreGraphics;
 using Foundation;
+using GrawApp.Model;
 using UIKit;
 
 namespace GrawApp.Controller.Raw
 {
-    public partial class RawPageViewController : UIPageViewController
+    public partial class RawPageViewController : UIPageViewController,ISetData<RawData>
     {
         public UIPageControl PageControl { get; set; }
+        List<ISetData<RawData>> _setDataList;
         public RawPageViewController(IntPtr handle) : base(handle)
         {
         }
@@ -23,9 +25,10 @@ namespace GrawApp.Controller.Raw
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
+            _setDataList = new List<ISetData<RawData>>();
             //NavigationController?.InteractivePopGestureRecognizer.Enabled = false;
             var rawDataSource = new RawPageDataSource();
+            rawDataSource.SetDataList = _setDataList;
             PageControl = new UIPageControl();
 
             //PageSource.PageControl = PageControl;
@@ -55,9 +58,18 @@ namespace GrawApp.Controller.Raw
             this.View.AddSubview(PageControl);
         }
 
+        public void SetData(RawData data)
+        {
+            foreach (var item in _setDataList)
+            {
+                item?.SetData(data);
+            }
+
+        }
+
         public class RawPageDataSource : UIPageViewControllerDataSource
         {
-
+            public List<ISetData<RawData>> SetDataList { get; set; } = new List<ISetData<RawData>>();
             public List<string> ViewControllerIdentifiers { get; set; } = new List<string> { "Page1", "Page2" };
             //public UIPageControl PageControl { get; set; }
 
@@ -113,8 +125,12 @@ namespace GrawApp.Controller.Raw
             {
 
                 var storyboard = UIStoryboard.FromName("Main", null);
-                var nc = storyboard.InstantiateViewController(ViewControllerIdentifiers[index]) as UIViewController;
+                var nc = storyboard.InstantiateViewController(ViewControllerIdentifiers[index]) as RawBaseViewController;
                 //nc.Index = index;
+                var exists = SetDataList.Exists(x=>x == nc);
+                if (!exists)
+                    SetDataList.Add(nc);
+                
                 return nc;
 
             }

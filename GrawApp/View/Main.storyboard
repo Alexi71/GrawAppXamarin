@@ -601,17 +601,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bvm-8F-ac4">
-                                <rect key="frame" x="134" y="273" width="142" height="84"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n1k-tw-6xS">
+                                <rect key="frame" x="0.0" y="87.666666666666686" width="375" height="690.33333333333326"/>
+                                <subviews>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="z5y-ce-iCX">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="690.33333333333337"/>
+                                    </mapView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="z5y-ce-iCX" firstAttribute="leading" secondItem="n1k-tw-6xS" secondAttribute="leading" id="c5d-wN-DBc"/>
+                                    <constraint firstAttribute="trailing" secondItem="z5y-ce-iCX" secondAttribute="trailing" id="erH-AV-sAr"/>
+                                    <constraint firstItem="z5y-ce-iCX" firstAttribute="top" secondItem="n1k-tw-6xS" secondAttribute="top" id="exy-Rj-7Ft"/>
+                                    <constraint firstAttribute="bottom" secondItem="z5y-ce-iCX" secondAttribute="bottom" id="wxW-Bf-agh"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="n1k-tw-6xS" firstAttribute="leading" secondItem="YOO-63-BSj" secondAttribute="leading" id="4lI-Nd-ypD"/>
+                            <constraint firstItem="YOO-63-BSj" firstAttribute="bottom" secondItem="n1k-tw-6xS" secondAttribute="bottom" id="O8U-dI-kkT"/>
+                            <constraint firstItem="n1k-tw-6xS" firstAttribute="height" secondItem="Ak8-kV-6ef" secondAttribute="height" multiplier="0.85" id="RHy-mB-r7Z"/>
+                            <constraint firstItem="YOO-63-BSj" firstAttribute="trailing" secondItem="n1k-tw-6xS" secondAttribute="trailing" id="dbb-ef-oqu"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YOO-63-BSj"/>
                     </view>
+                    <connections>
+                        <outlet property="MapView" destination="z5y-ce-iCX" id="ofG-cP-3C9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qcs-Ji-Dtt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

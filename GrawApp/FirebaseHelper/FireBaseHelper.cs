@@ -36,8 +36,8 @@ namespace GrawApp.FirebaseHelper
 
             var referenceNode = childNode.ObserveEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
             {
-                var flightData = GetRawDataFromSnapshot(snapshot);
-
+            var data = GetRawDataFromSnapshot(snapshot);
+                _action?.Invoke(data);
             });
         }
 
@@ -46,6 +46,23 @@ namespace GrawApp.FirebaseHelper
             var child = snapshot.Children;
             var data = snapshot.GetValue<NSDictionary>();
             Console.WriteLine(snapshot.Key);
+            var rawdata = new RawData();
+            rawdata.EpochTime = GetDoubleValue(data["EpochTime"]).GetValueOrDefault();
+            rawdata.Latitude = GetDoubleValue(data["Latitude"]).GetValueOrDefault();
+            rawdata.Longitude = GetDoubleValue(data["Longitude"]).GetValueOrDefault();
+            rawdata.Temperature = GetDoubleValue(data["Temperature"]).GetValueOrDefault();
+            rawdata.Humdity = GetDoubleValue(data["Humidity"]).GetValueOrDefault();
+            rawdata.Pressure = GetDoubleValue(data["Pressure"]).GetValueOrDefault();
+            rawdata.Altitude = GetDoubleValue(data["Altitude"]).GetValueOrDefault();
+            rawdata.WindSpeed = GetDoubleValue(data["WindSpeed"]).GetValueOrDefault();
+            rawdata.WindDirection = GetDoubleValue(data["WinDirection"]).GetValueOrDefault();
+            rawdata.GpsStatus = GetIntegerValue(data["GpsStatus"]).GetValueOrDefault();
+            rawdata.SensorStatus = GetIntegerValue(data["SensorStatus"]).GetValueOrDefault();
+            rawdata.TelemetryStatus = GetIntegerValue(data["TelemetryStatus"]).GetValueOrDefault();
+            rawdata.StartTime = GetDoubleValue(data["StartTimeEpoch"]).GetValueOrDefault();
+            rawdata.StartDetected = GetBoolValue(data["StartDetected"]).GetValueOrDefault();
+            rawdata.Url = GetStringValue(data["Url"]);
+
 
             //FlightContent flightData = new FlightContent();
             //flightData.Key = snapshot.Key;
@@ -81,8 +98,61 @@ namespace GrawApp.FirebaseHelper
             //        flightData.EpochTime = Convert.ToDouble(ob);
             //    }
             //}
-            return new RawData();
+            return rawdata;
         }
+
+        string GetStringValue (NSObject data)
+        {
+            if (data != null)
+            {
+                return Convert.ToString(data);
+            }
+            return string.Empty;
+        }
+
+        bool? GetBoolValue(NSObject data)
+        {
+            if (data != null)
+            {
+                if (data is NSNumber x)
+
+                {
+                    return x.BoolValue;
+
+                }
+            }
+            return null;
+        }
+
+
+        double? GetDoubleValue(NSObject data)
+        {
+            if (data != null)
+            {
+                if (data is NSNumber x)
+
+                {
+                    return x.DoubleValue;
+
+                }
+            }
+            return null;
+        }
+
+        int? GetIntegerValue(NSObject data)
+        {
+            if (data != null)
+            {
+                if (data is NSNumber x)
+
+                {
+                    return x.Int32Value;
+
+                }
+            }
+            return null;
+        }
+
 
         public static void DeleteFlightFromCloud(FlightContent data, string stationKey)
         {

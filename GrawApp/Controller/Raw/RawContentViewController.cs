@@ -3,29 +3,69 @@
 using System;
 using CoreGraphics;
 using Foundation;
+using GrawApp.FirebaseHelper;
+using GrawApp.Helper;
+using GrawApp.Model;
 using UIKit;
 
 namespace GrawApp.Controller.Raw
 {
-	public partial class RawContentViewController : UIViewController
-	{
-        
+    public partial class RawContentViewController : UIViewController
+    {
+
         RawPageViewController _rawPageViewController;
-		public RawContentViewController (IntPtr handle) : base (handle)
-		{
-		}
+        FireBaseHelper _firebaseHelper;
+        ISetData<RawData> _setData;
+        public RawContentViewController(IntPtr handle) : base(handle)
+        {
+        }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
             _rawPageViewController = new RawPageViewController();
-
+            _setData = _rawPageViewController;
             var sampleFrame = new CGRect(SubView.Bounds.Location.X,
                                          SubView.Bounds.GetMinY(),
                                          SubView.Bounds.Width,
                                          SubView.Bounds.Height);
             _rawPageViewController.View.Frame = sampleFrame;
             SubView.Add(_rawPageViewController.View);
+
+            var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+            var station = appDelegate.ActiveStation;
+            var flight = appDelegate.CurrentFlight;
+
+            _firebaseHelper = new FireBaseHelper(station.Key, flight.Key);
+            _firebaseHelper.StartRawDataObserver((obj) =>
+            {
+                Console.WriteLine(obj.EpochTime);
+                GpsImage.Image = new UIImage(GetImageName(obj.GpsStatus));
+                SensorImage.Image = new UIImage(GetImageName(obj.SensorStatus));
+                TelemetryImage.Image = new UIImage(GetImageName(obj.TelemetryStatus));
+                if (obj.StartDetected)
+                    StartTimeText.Text = $"Start Time: {obj.StartTime.FromUnixTime():HH:mm:ss}";
+                LastUpdateText.Text = $"Last Update: {obj.EpochTime.FromUnixTime():HH:mm:ss}";
+                _setData?.SetData(obj);
+            });
         }
+
+        string GetImageName(int status)
+        {
+            switch (status)
+            {
+                case 0:
+                    return "g5_status_32x32_gruen.png";
+                case 1:
+                    return "g5_status_32x32_rot.png";
+                default:
+                    return "g5_status_32x32_grau.png";
+            }
+        }
+    }
+
+    public interface ISetData<T>
+    {
+        void SetData(T data);
     }
 }

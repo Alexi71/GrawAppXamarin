@@ -1,16 +1,19 @@
 ﻿using System;
 using GrawApp.Controller.Raw;
+using GrawApp.Model;
 using UIKit;
 
 namespace GrawApp.Controller
 {
-    public partial class RawBaseViewController : UIViewController
+    public partial class RawBaseViewController : UIViewController, ISetData<RawData>
     {
-        RawDataHandler DataHandler;
+
+
+        /*RawDataHandler DataHandler;*/
         public RawBaseViewController(IntPtr handle) : base(handle)
         {
         }
-
+        /*
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -30,6 +33,10 @@ namespace GrawApp.Controller
         {
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
+        }*/
+        public virtual void SetData(RawData data)
+        {
+            
         }
     }
 }

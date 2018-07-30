@@ -3,12 +3,14 @@
 using System;
 
 using Foundation;
+using GrawApp.Model;
 using UIKit;
 
 namespace GrawApp.Controller.Raw
 {
-	public partial class PageOneViewController : UIViewController
+	public partial class PageOneViewController : RawBaseViewController
 	{
+        RawDataRepository _dataRepository;
 		public PageOneViewController (IntPtr handle) : base (handle)
 		{
 		}
@@ -16,16 +18,29 @@ namespace GrawApp.Controller.Raw
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            TableView.Source = new RawValueTableViewSource();
+            _dataRepository = new RawDataRepository();
+            TableView.Source = new RawValueTableViewSource(){DataRepository = _dataRepository};
+        }
+
+        public override void SetData(RawData data)
+        {
+            _dataRepository.SetValue(data.Temperature, DataType.Temperature,"0.0","°C");
+            _dataRepository.SetValue(data.Humdity, DataType.Humdity,"0","%");
+            _dataRepository.SetValue(data.Pressure, DataType.Pressure,"0.0","mB");
+            _dataRepository.SetValue(data.Altitude, DataType.Altitude,"0","m");
+            _dataRepository.SetValue(data.WindSpeed, DataType.Windspeed,"0.0","m/s");
+            _dataRepository.SetValue(data.WindDirection, DataType.Winddirection,"000","°");
+            TableView.ReloadData();
+
         }
     }
 
     internal class RawValueTableViewSource : UITableViewSource
     {
-        RawDataRepository DataRepository;
+        public RawDataRepository DataRepository { get; set; }
         public RawValueTableViewSource()
         {
-            DataRepository = new RawDataRepository();
+            
         }
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {

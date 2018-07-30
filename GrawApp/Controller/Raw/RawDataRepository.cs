@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using GrawApp.Model;
 
 namespace GrawApp.Controller.Raw
@@ -74,5 +75,12 @@ namespace GrawApp.Controller.Raw
 
             return DataList[index];
         }
+
+        public void SetValue(double value,DataType type,string format,string unit)
+        {
+            var newValue = DataList.FirstOrDefault(s => s.Type == type);
+            newValue.Value = $"{value.ToString(format)} {unit}";
+        }
+
     }
 }
