@@ -18,6 +18,7 @@ namespace GrawApp
         public Station ActiveStation { get; set; }
         public List<InputData> ProfileData { get; set; }
         public FlightContent CurrentFlight { get; set; }
+        public RawData RawData { get; set; }
 
         public override UIWindow Window
         {

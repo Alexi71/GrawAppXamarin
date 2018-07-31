@@ -49,7 +49,7 @@ namespace GrawApp.Controller.Raw
                                                        this.View.Bounds.GetMinX(),
                                                        UIScreen.MainScreen.Bounds.Width,
                                                        height: 50));
-            PageControl.Pages = 2;
+            PageControl.Pages = 3;
             PageControl.CurrentPage = 0;
             PageControl.Enabled = true;
             PageControl.TintColor = UIColor.Black;
@@ -60,6 +60,8 @@ namespace GrawApp.Controller.Raw
 
         public void SetData(RawData data)
         {
+            var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+            appDelegate.RawData = data;
             foreach (var item in _setDataList)
             {
                 item?.SetData(data);
@@ -70,7 +72,7 @@ namespace GrawApp.Controller.Raw
         public class RawPageDataSource : UIPageViewControllerDataSource
         {
             public List<ISetData<RawData>> SetDataList { get; set; } = new List<ISetData<RawData>>();
-            public List<string> ViewControllerIdentifiers { get; set; } = new List<string> { "Page1", "Page2" };
+            public List<string> ViewControllerIdentifiers { get; set; } = new List<string> { "Page1", "Page2","Page3" };
             //public UIPageControl PageControl { get; set; }
 
             public RawPageViewController ParentViewController { get; set; }

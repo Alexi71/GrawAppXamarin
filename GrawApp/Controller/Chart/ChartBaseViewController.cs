@@ -14,7 +14,7 @@ namespace GrawApp.Controller
         public List<InputData> Data {get;set;}
         public List<InputData> ReducedData { get; set; }
 
-        protected Dictionary<string, UIColor> Colors = new Dictionary<string, UIColor>(){
+        public Dictionary<string, UIColor> Colors { get; private set; }= new Dictionary<string, UIColor>(){
             {"Temperature",new UIColor(2f / 255f, 64f / 255f, 123f / 255f, 1.0f)},
             {"Humidity",new UIColor(215f / 255f, 76f / 255f, 1f / 255f, 1.0f)},
             {"Pressure",new UIColor(166f / 255f, 2f / 255f, 2f / 255f, 1.0f)},
@@ -36,7 +36,10 @@ namespace GrawApp.Controller
         //public List<SFChartDataPoint> WindDirectionReducedPoints { get; set; }
         //public List<SFChartDataPoint> DewpointReducedPoints { get; set; }
 
+        public ChartBaseViewController()
+        {
 
+        }
 
 
         public ChartBaseViewController(IntPtr handle):base(handle)
@@ -52,7 +55,7 @@ namespace GrawApp.Controller
 
         }
 
-        protected SFScatterSeries GetPointSeries(IEnumerable dataSource, string label, string xPath, string yPath, UIColor color,
+        public SFScatterSeries GetPointSeries(IEnumerable dataSource, string label, string xPath, string yPath, UIColor color,
                             bool needAxisX, int minX, int maxX,
                             bool needAxisY, int minY, int maxY,
                                       bool xAxisVisible = true, bool xAxisShowGridlines = false, bool xAxisIsLogarithmic = false,
@@ -124,7 +127,7 @@ namespace GrawApp.Controller
             return series;
         }
 
-        protected SFLineSeries GetSeries(IEnumerable dataSource, string label, string xPath, string yPath, UIColor color,
+        public SFLineSeries GetSeries(IEnumerable dataSource, string label, string xPath, string yPath, UIColor color,
                              bool needAxisX, int minX, int maxX,
                              bool needAxisY, int minY, int maxY,
                               bool xAxisVisible = true, bool xAxisShowGridlines = false, bool xAxisIsLogarithmic = false,

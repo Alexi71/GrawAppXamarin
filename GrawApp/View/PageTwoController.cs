@@ -32,6 +32,14 @@ namespace GrawApp.Controller.Raw
                 Console.WriteLine("Authorization changed to: {0}", args.Status);
             };
             _locationManager.RequestWhenInUseAuthorization();
+
+            var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+            var rawData = appDelegate.RawData;
+
+            if (!string.IsNullOrEmpty(rawData?.Url))
+            {
+                LoadData(rawData?.Url);
+            }
         }
 
         public override void SetData(RawData data)

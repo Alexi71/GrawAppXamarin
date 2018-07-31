@@ -290,6 +290,15 @@
     <Compile Include="Controller\Raw\RawDataRepository.cs" />
     <Compile Include="Model\RawData.cs" />
     <Compile Include="Helper\MapHelper.cs" />
+    <Compile Include="View\RawChartViewController.cs" />
+    <Compile Include="View\RawChartViewController.designer.cs">
+      <DependentUpon>RawChartViewController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FirebaseHelper\FirebaseStationStatus.cs" />
+    <Compile Include="View\StationStatusTableVewController.cs" />
+    <Compile Include="View\StationStatusTableVewController.designer.cs">
+      <DependentUpon>StationStatusTableVewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
