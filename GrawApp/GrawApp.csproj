@@ -289,6 +289,7 @@
     </Compile>
     <Compile Include="Controller\Raw\RawDataRepository.cs" />
     <Compile Include="Model\RawData.cs" />
+    <Compile Include="Helper\MapHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />

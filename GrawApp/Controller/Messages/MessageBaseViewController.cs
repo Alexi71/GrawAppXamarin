@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
+using CoreGraphics;
 using Foundation;
 using GrawApp.Model;
 using Syncfusion.SfBusyIndicator.iOS;
@@ -13,7 +14,8 @@ namespace GrawApp.Controller.Messages
         public int Index { get; set; }
 
         FlightContent Flight;
-        public SFBusyIndicator BusyIndicator {get; set;}
+
+        public UIActivityIndicatorView ActivityIndicator { get; set; }
         public MessageBaseViewController(IntPtr handle) : base(handle)
         {
             var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
@@ -30,25 +32,21 @@ namespace GrawApp.Controller.Messages
 
         public void InitializeIndicator(UIView view)
         {
-            BusyIndicator = new SFBusyIndicator()
-            {
-                Frame = view.Frame,
-                Opaque = true,
-                BackgroundColor = new UIColor(255f / 255f, 255f / 255f, 255f / 255f, 0.5f),
-                AnimationType = SFBusyIndicatorAnimationType.SFBusyIndicatorAnimationTypeSlicedCircle,
-                Title = (NSString)"Loading...",
-                ViewBoxWidth = 80,
-                ViewBoxHeight = 80,
-                Foreground = UIColor.Gray,
-                Duration = 2,
-                IsBusy = true,
-                Hidden = false
-            };
-            view.AddSubview(BusyIndicator);
+
+            ActivityIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.WhiteLarge);
+            ActivityIndicator.Frame = new CGRect(150, 150, 40, 40);
+            ActivityIndicator.Center = view.Center;
+            View.AddSubview(ActivityIndicator);
+            ActivityIndicator.BringSubviewToFront(view);
+            //UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
+
+            ActivityIndicator.Color = UIColor.Gray;
+           
         }
 
         public void GetText(bool isHundred)
         {
+            ActivityIndicator.StartAnimating();
             var webClient = new WebClient();
 
             webClient.DownloadStringCompleted += (s, e) => {

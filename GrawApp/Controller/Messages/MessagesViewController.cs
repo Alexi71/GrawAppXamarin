@@ -23,7 +23,7 @@ namespace GrawApp
 
         public override void UpdateText(string text)
         {
-            BusyIndicator.Hidden = true;
+            ActivityIndicator.StopAnimating();
             textView.Text = text;
         }
     }

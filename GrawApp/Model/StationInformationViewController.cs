@@ -15,6 +15,7 @@ using GrawApp.Controller;
 using Syncfusion.SfBusyIndicator.iOS;
 using System.Linq;
 using GrawApp.Helper;
+using CoreGraphics;
 
 namespace GrawApp
 {
@@ -29,7 +30,9 @@ namespace GrawApp
         CLLocationManager locationManager = new CLLocationManager();
         public Station ActiveStation { get; private set; }
         TableSourceStationInformation TableSource = new TableSourceStationInformation();
-        public SFBusyIndicator BusyIndicator { get; set; }
+       
+
+        public UIActivityIndicatorView ActivityIndicator { get; set; }
         public UITableView TableView { get { return tableView; } }
 
         DateTime _startTime;
@@ -58,23 +61,9 @@ namespace GrawApp
             }
             timeLabel.Text = $"{_startTime.ToShortDateString()}-{_endTime.ToShortDateString()}";
 
-            BusyIndicator = new SFBusyIndicator()
-            {
-                Frame = View.Frame,
-                Opaque = true,
-                BackgroundColor = new UIColor(255f / 255f, 255f / 255f, 255f / 255f, 0.5f),
-                AnimationType = SFBusyIndicatorAnimationType.SFBusyIndicatorAnimationTypeSlicedCircle,
-                Title = (NSString)"Loading...",
-                ViewBoxWidth = 80,
-                ViewBoxHeight = 80,
-                Foreground = UIColor.Gray,
-                Duration = 2,
-                IsBusy = true,
-                Hidden = true
-            };
-
-            View.AddSubview(BusyIndicator);
-
+           
+           
+            InitializeActivityIndicator();
             TableSource.ViewController = this;
             menuButton.Clicked += (sender, e) => this.RevealViewController().RevealToggleAnimated(true);
             View.AddGestureRecognizer(this.RevealViewController().PanGestureRecognizer);
@@ -98,7 +87,17 @@ namespace GrawApp
 
         }
 
+        void InitializeActivityIndicator()
+        {
+            ActivityIndicator = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.WhiteLarge);
+            ActivityIndicator.Frame = new CGRect(150, 150, 40, 40);
+            ActivityIndicator.Center = View.Center;
+            View.AddSubview(ActivityIndicator);
+            ActivityIndicator.BringSubviewToFront(View);
+            //UIApplication.SharedApplication.NetworkActivityIndicatorVisible = true;
 
+            ActivityIndicator.Color = UIColor.Gray;
+        }
 
         public void UpdateTableView()
         {
@@ -140,7 +139,8 @@ namespace GrawApp
 
         void InitializeDatabase()
         {
-            BusyIndicator.Hidden = false;
+            //BusyIndicator.Hidden = false;
+            ActivityIndicator.StartAnimating();
             TableSource.FlightList.Clear();
             tableView.ReloadData();
             var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
@@ -157,7 +157,7 @@ namespace GrawApp
                     TableSource.FlightList.Add(flightData);
                     tableView.ReloadData();
                     View.SetNeedsDisplay();
-                    BusyIndicator.Hidden = true;
+                    ActivityIndicator.StopAnimating();
                     Console.WriteLine("Flight added");
                 });
             });
@@ -168,7 +168,7 @@ namespace GrawApp
                 {
                     InvokeOnMainThread(() =>
                     {
-                        BusyIndicator.Hidden = true;
+                        ActivityIndicator.StopAnimating();
                         Console.WriteLine("Flight added");
                     });
                 }
@@ -186,7 +186,7 @@ namespace GrawApp
                     tableView.ReloadData();
                     View.SetNeedsDisplay();
                     //tableView.EndUpdates();
-                    BusyIndicator.Hidden = true;
+                    ActivityIndicator.StopAnimating();
                     Console.WriteLine("Flight deleted");
                 });
 
@@ -391,13 +391,13 @@ namespace GrawApp
         {
             
             var flight = FlightList[indexPath.Row];
-            ViewController.BusyIndicator.Hidden = false;
+            ViewController.ActivityIndicator.StartAnimating();
 
             if(flight.IsRealTimeFlight)
             {
                 var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
                 appDelegate.CurrentFlight = flight;
-                ViewController.BusyIndicator.Hidden = true;
+                ViewController.ActivityIndicator.StopAnimating();
                 GotoRawPage();
                 return;
             }
@@ -410,7 +410,7 @@ namespace GrawApp
                 appDelegate.CurrentFlight = inputDataList;
                 appDelegate.ProfileData = new List<InputData>(inputDataList.InputDataList);
                 Console.WriteLine("Input data available");
-                ViewController.BusyIndicator.Hidden = true;
+                ViewController.ActivityIndicator.StopAnimating();
                 GotoNextPage();
                 return;
             }
@@ -435,7 +435,7 @@ namespace GrawApp
                     Console.WriteLine("OK");
                     InvokeOnMainThread(() =>
                     {
-                        ViewController.BusyIndicator.Hidden = true;
+                        ViewController.ActivityIndicator.StopAnimating();
                         GotoNextPage();
                     });
                 }
