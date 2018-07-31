@@ -20,6 +20,13 @@ namespace GrawApp.Controller.Raw
             base.ViewDidLoad();
             _dataRepository = new RawDataRepository();
             TableView.Source = new RawValueTableViewSource(){DataRepository = _dataRepository};
+            var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+            var rawData = appDelegate.RawData;
+
+            if (rawData != null)
+            {
+                SetData(rawData);
+            }
         }
 
         public override void SetData(RawData data)

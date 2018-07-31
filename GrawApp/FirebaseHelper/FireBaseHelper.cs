@@ -13,7 +13,7 @@ namespace GrawApp.FirebaseHelper
         private readonly string _stationKey;
         private readonly string _flightKey;
         Action<RawData> _action;
-
+        Action<FlightContent> _actionStatus;
         public FireBaseHelper()
         {
         }
@@ -41,6 +41,41 @@ namespace GrawApp.FirebaseHelper
             });
         }
 
+        public void StartStationStatusObserver(Action<FlightContent> action)
+        {
+            _actionStatus = action;
+
+            var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
+            var childNode = rootNode.GetChild("station").GetChild(_stationKey).GetChild("flights")
+                                    .GetQueryOrderedByChild("EpochTime").GetQueryLimitedToLast(1);
+            childNode.ObserveSingleEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
+            {
+
+                var data = GetFlightDataFromSnapshot(snapshot);
+                _actionStatus?.Invoke(data);
+            });
+        }
+
+
+
+        private FlightContent GetFlightDataFromSnapshot(DataSnapshot snapshot)
+        {
+            var data = snapshot.GetValue<NSDictionary>();
+            Console.WriteLine(snapshot.Key);
+            FlightContent flightData = new FlightContent();
+            flightData.Key = snapshot.Key;
+            flightData.Date = GetStringValue(data["Date"]);
+            flightData.Time = GetStringValue(data["Time"]);
+            flightData.FileName = GetStringValue(data["FileName"]);
+            flightData.Url = GetStringValue(data["Url"]);
+            flightData.Url100 = GetStringValue(data["Url100"]);
+            flightData.UrlEnd = GetStringValue(data["UrlEnd"]);
+            flightData.IsRealTimeFlight = GetBoolValue(data["IsRealTimeDataAvailable"]).GetValueOrDefault();
+            flightData.EpochTime = GetDoubleValue(data["EpochTime"]).GetValueOrDefault();
+            return flightData;
+        }
+
+
         private RawData GetRawDataFromSnapshot(DataSnapshot snapshot)
         {
             var child = snapshot.Children;
@@ -62,42 +97,6 @@ namespace GrawApp.FirebaseHelper
             rawdata.StartTime = GetDoubleValue(data["StartTimeEpoch"]).GetValueOrDefault();
             rawdata.StartDetected = GetBoolValue(data["StartDetected"]).GetValueOrDefault();
             rawdata.Url = GetStringValue(data["Url"]);
-
-
-            //FlightContent flightData = new FlightContent();
-            //flightData.Key = snapshot.Key;
-            //if (data["Date"] != null)
-            //    flightData.Date = Convert.ToString(data["Date"]);
-            //if (data["Time"] != null)
-            //    flightData.Time = Convert.ToString(data["Time"]);
-            //if (data["FileName"] != null)
-            //    flightData.FileName = Convert.ToString(data["FileName"]);
-            //if (data["Url"] != null)
-            //    flightData.Url = Convert.ToString(data["Url"]);
-            //if (data["Url100"] != null)
-            //    flightData.Url100 = Convert.ToString(data["Url100"]);
-            //if (data["UrlEnd"] != null)
-            //    flightData.UrlEnd = Convert.ToString(data["UrlEnd"]);
-            //if (data["IsRealTimeDataAvailable"] != null)
-            //{
-            //    if (data["IsRealTimeDataAvailable"] is NSNumber)
-            //    {
-            //        var x = (NSNumber)data["IsRealTimeDataAvailable"];
-            //        var ob = x.BoolValue;
-            //        flightData.IsRealTimeFlight = Convert.ToBoolean(ob);
-            //    }
-
-
-            //}
-            //if (data["EpochTime"] != null)
-            //{
-            //    if (data["EpochTime"] is NSNumber)
-            //    {
-            //        var x = (NSNumber)data["EpochTime"];
-            //        var ob = x.DoubleValue;
-            //        flightData.EpochTime = Convert.ToDouble(ob);
-            //    }
-            //}
             return rawdata;
         }
 
