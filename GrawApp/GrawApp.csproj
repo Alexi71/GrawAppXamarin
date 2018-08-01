@@ -299,6 +299,8 @@
     <Compile Include="View\StationStatusTableVewController.designer.cs">
       <DependentUpon>StationStatusTableVewController.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\StationFlightInfo.cs" />
+    <Compile Include="Repository\StationFlightStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
@@ -341,9 +343,12 @@
     <BundleResource Include="Resources\icons8_water_50.png" />
     <BundleResource Include="Resources\icons8_windsock_filled_50.png" />
     <BundleResource Include="Resources\vertical_double_arrow.png" />
+    <BundleResource Include="Resources\g5_status_16x16_gruen_heller.png" />
+    <BundleResource Include="Resources\g5_status_32x32_gruen_heller.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\" />
+    <Folder Include="Repository\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.6\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.6\build\Xamarin.Build.Download.targets')" />

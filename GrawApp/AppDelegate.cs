@@ -19,6 +19,8 @@ namespace GrawApp
         public List<InputData> ProfileData { get; set; }
         public FlightContent CurrentFlight { get; set; }
         public RawData RawData { get; set; }
+        public string UserId { get; set; }
+        public bool FirstCall { get; set; } = true;
 
         public override UIWindow Window
         {

@@ -242,21 +242,42 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="logout" textLabel="9355" imageView="13418" style="IBUITableViewCellStyleDefault" id="9350">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="status" textLabel="9355" imageView="13418" style="IBUITableViewCellStyleDefault" id="9350">
                                         <rect key="frame" x="0.0" y="161" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9350" id="9351">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9355">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9355">
                                                     <rect key="frame" x="54" y="0.0" width="306" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="007-exit.png" id="13418">
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="003-history-clock-button.png" id="13418">
+                                                    <rect key="frame" x="15" y="9" width="24" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="logout" textLabel="DhQ-IB-6Ri" imageView="bmV-UG-3Vh" style="IBUITableViewCellStyleDefault" id="V8Q-EL-Cqx">
+                                        <rect key="frame" x="0.0" y="205" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V8Q-EL-Cqx" id="rN1-UN-b7S">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DhQ-IB-6Ri">
+                                                    <rect key="frame" x="54" y="0.0" width="306" height="43.666666666666664"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="007-exit.png" id="bmV-UG-3Vh">
                                                     <rect key="frame" x="15" y="9" width="24" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
@@ -596,7 +617,23 @@
             </objects>
             <point key="canvasLocation" x="-1303" y="3706"/>
         </scene>
-        <!--Station Status Table Vew Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="fg3-o5-LWN">
+            <objects>
+                <navigationController storyboardIdentifier="statusNavigation" id="kS1-qt-yh6" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Haw-AK-3pM">
+                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Sgd-Oa-FtI" kind="relationship" relationship="rootViewController" id="IeY-H2-hwC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rdy-40-MM1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-426" y="3850"/>
+        </scene>
+        <!--Station Status-->
         <scene sceneID="IiU-kz-DMy">
             <objects>
                 <tableViewController id="Sgd-Oa-FtI" customClass="StationStatusTableVewController" sceneMemberID="viewController">
@@ -605,47 +642,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="nDg-hD-WzK">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellStatus" textLabel="8Tx-4E-bBH" detailTextLabel="0Gz-2E-fwg" style="IBUITableViewCellStyleSubtitle" id="nDg-hD-WzK">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="nDg-hD-WzK" id="6x6-NT-N5e">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.666666666666664"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stony Plain" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyf-SK-anv">
-                                            <rect key="frame" x="8" y="0.0" width="100" height="43.666666666666664"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="100" id="11A-lu-dkJ"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8Tx-4E-bBH">
+                                            <rect key="frame" x="16.000000000000004" y="5" width="33.333333333333336" height="20.333333333333332"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="g5_status_32x32_gruen.png" translatesAutoresizingMaskIntoConstraints="NO" id="HdZ-9Q-eut">
-                                            <rect key="frame" x="314" y="6" width="30" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="2u1-vd-7jI"/>
-                                                <constraint firstAttribute="width" constant="30" id="3I1-VT-JhD"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12/11/2018 07:00 UTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7Y-mq-FbT">
-                                            <rect key="frame" x="122" y="0.0" width="178" height="43.666666666666664"/>
-                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0Gz-2E-fwg">
+                                            <rect key="frame" x="15.999999999999996" y="25.333333333333332" width="43.666666666666664" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="HdZ-9Q-eut" firstAttribute="centerY" secondItem="6x6-NT-N5e" secondAttribute="centerY" id="0HC-si-3ud"/>
-                                        <constraint firstItem="HdZ-9Q-eut" firstAttribute="leading" secondItem="g7Y-mq-FbT" secondAttribute="trailing" constant="14" id="ErV-QZ-0sn"/>
-                                        <constraint firstItem="g7Y-mq-FbT" firstAttribute="top" secondItem="6x6-NT-N5e" secondAttribute="top" id="IIe-8Y-WWj"/>
-                                        <constraint firstItem="Jyf-SK-anv" firstAttribute="top" secondItem="6x6-NT-N5e" secondAttribute="top" id="KtY-wm-ImH"/>
-                                        <constraint firstItem="g7Y-mq-FbT" firstAttribute="leading" secondItem="6x6-NT-N5e" secondAttribute="leading" constant="122" id="MhO-a9-SJm"/>
-                                        <constraint firstAttribute="bottom" secondItem="Jyf-SK-anv" secondAttribute="bottom" id="NVd-sj-Yqe"/>
-                                        <constraint firstItem="Jyf-SK-anv" firstAttribute="leading" secondItem="6x6-NT-N5e" secondAttribute="leading" constant="8" id="XCm-5m-Afq"/>
-                                        <constraint firstAttribute="bottom" secondItem="g7Y-mq-FbT" secondAttribute="bottom" id="cdg-Bw-KfU"/>
-                                        <constraint firstAttribute="trailing" secondItem="HdZ-9Q-eut" secondAttribute="trailing" constant="31" id="xMl-8b-FBz"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -654,15 +672,17 @@
                             <outlet property="delegate" destination="Sgd-Oa-FtI" id="nXo-Nf-uZA"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Station Status" id="NYk-zw-Fwe">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="cNT-1u-k4x"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="hamburgerButtonIcon.png" id="gg4-cP-b3F"/>
+                    </navigationItem>
                     <connections>
-                        <outlet property="LastDateLabel" destination="g7Y-mq-FbT" id="Q0x-yP-cDq"/>
-                        <outlet property="StationNameLabel" destination="Jyf-SK-anv" id="VAc-zH-LaH"/>
-                        <outlet property="StatusImage" destination="HdZ-9Q-eut" id="453-YS-Bzd"/>
+                        <outlet property="MenuButton" destination="gg4-cP-b3F" id="KU1-ub-StD"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="19Q-bU-1wn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-452" y="3868.9655172413795"/>
+            <point key="canvasLocation" x="663" y="3850"/>
         </scene>
         <!--Item 2-->
         <scene sceneID="CcU-x0-dvW">
@@ -1154,11 +1174,11 @@
     <resources>
         <image name="002-settings" width="16" height="16"/>
         <image name="002-settings.png" width="24" height="24"/>
+        <image name="003-history-clock-button.png" width="24" height="24"/>
         <image name="006-add.png" width="24" height="24"/>
         <image name="007-exit.png" width="24" height="24"/>
         <image name="Wetterstation_500px_72dpi.jpg" width="500" height="524"/>
         <image name="g5_status_32x32_grau.png" width="32" height="32"/>
-        <image name="g5_status_32x32_gruen.png" width="32" height="32"/>
         <image name="hamburgerButtonIcon.png" width="15" height="15"/>
         <image name="icons8-kalender-50-white.png" width="50" height="50"/>
         <image name="paper-plane.png" width="32" height="32"/>

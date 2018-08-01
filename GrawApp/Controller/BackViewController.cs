@@ -33,7 +33,7 @@ namespace GrawApp
 
     public class TableSource:UITableViewSource
     {
-        List<String> menuData = new List<string>() { "add", "settings", "logout" };
+        List<String> menuData = new List<string>() { "add", "settings","status", "logout" };
         List<Station> stationData;// = new List<string>() { "Nürnberg", "Rostock" };
         public UIViewController ParentController { get; set; }
         Station DefaultStation;
@@ -117,6 +117,13 @@ namespace GrawApp
                         {
                             var storyboard = UIStoryboard.FromName("Main", null);
                             var nc = storyboard.InstantiateViewController("addStationNavigation") as UINavigationController;
+                            ParentController.RevealViewController().PushFrontViewController(nc, true);
+                        }
+                        break;
+                    case "status":
+                        {
+                            var storyboard = UIStoryboard.FromName("Main", null);
+                            var nc = storyboard.InstantiateViewController("statusNavigation") as UINavigationController;
                             ParentController.RevealViewController().PushFrontViewController(nc, true);
                         }
                         break;

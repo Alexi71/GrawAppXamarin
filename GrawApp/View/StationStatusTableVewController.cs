@@ -3,16 +3,120 @@
 using System;
 
 using Foundation;
+using GrawApp.Database;
+using GrawApp.FirebaseHelper;
+using GrawApp.Model;
+using GrawApp.Repository;
 using UIKit;
+using Xamarin.SWRevealViewController;
 
 namespace GrawApp.View
 {
 	public partial class StationStatusTableVewController : UITableViewController
 	{
+        FireBaseHelper _firebaseHelper;
+        StationStatusTableViewDataSource _datasource;
+        UIRefreshControl _refreshControl;
+
 		public StationStatusTableVewController (IntPtr handle) : base (handle)
 		{
 		}
-	}
 
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
 
+            _firebaseHelper = new FireBaseHelper();
+            _datasource = new StationStatusTableViewDataSource(){ViewController = this};
+            TableView.Source = _datasource;
+            _refreshControl = new UIRefreshControl();
+            _refreshControl.ValueChanged += (sender, e) => {
+                
+                LoadData();
+                _refreshControl.EndRefreshing();
+            };
+            TableView.AddSubview(_refreshControl);
+            MenuButton.Clicked += (sender, e) => this.RevealViewController().RevealToggleAnimated(true);
+            LoadData();
+
+        }
+
+        private void LoadData()
+        {
+            var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+            _datasource.Repository.Clear();
+            var myStations = DatabaseHelper.GetAllStationsFromUser(appDelegate.UserId);
+            if (myStations != null)
+            {
+                foreach (var item in myStations)
+                {
+                    _firebaseHelper.StartStationStatusObserver((Model.FlightContent data) =>
+                    {
+                        Console.WriteLine(data.Key);
+                        _datasource.Repository.Add(item, data);
+                        TableView.ReloadData();
+                    }, item.Key);
+                }
+
+            }
+        }
+    }
+
+    internal class StationStatusTableViewDataSource : UITableViewSource
+    {
+        public StationFlightStatusRepository Repository { get; set; }
+        public StationStatusTableVewController ViewController { get; set; }
+        public StationStatusTableViewDataSource()
+        {
+            Repository = new StationFlightStatusRepository();
+        }
+        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        {
+            var cell = tableView.DequeueReusableCell("cellStatus") as UITableViewCell;
+            cell.TextLabel.Text = Repository.FlightStatusList[indexPath.Row].Name;
+            cell.DetailTextLabel.Text = Repository.FlightStatusList[indexPath.Row].Date;
+            cell.ImageView.Image = new UIImage(Repository.FlightStatusList[indexPath.Row].Status);
+            return cell;
+        }
+
+        public override nint RowsInSection(UITableView tableview, nint section)
+        {
+            return Repository.FlightStatusList.Count;
+        }
+
+        public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, NSIndexPath indexPath)
+        {
+            switch (editingStyle)
+            {
+                case UITableViewCellEditingStyle.Delete:
+                    var data = Repository.GetFlightInfo(indexPath.Row);
+                    ConfirmDelete(data, tableView);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void ConfirmDelete(StationFlightInfo item, UITableView tableView)
+        {
+            var okCancelAlertController = UIAlertController.Create("Delete station from list",
+                                                                   $"Are you sure to remove the station {item.Station.Name} from your list? ",
+                                                                   UIAlertControllerStyle.Alert);
+
+            //Add Actions
+            okCancelAlertController.AddAction(UIAlertAction.Create("OK",
+                                                                   UIAlertActionStyle.Default,
+                                                                   alert => {
+                                                                       Console.WriteLine("Okay was clicked");
+                                                                       //DeleteFlight(flight, tableView);
+                                                                   }));
+            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel",
+                                                                   UIAlertActionStyle.Cancel,
+                                                                   alert => Console.WriteLine("Cancel was clicked")));
+
+            //Present Alert
+            ViewController.PresentViewController(okCancelAlertController, true, null);
+
+        }
+    }
 }

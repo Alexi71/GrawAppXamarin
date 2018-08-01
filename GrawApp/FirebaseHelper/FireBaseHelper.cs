@@ -41,12 +41,12 @@ namespace GrawApp.FirebaseHelper
             });
         }
 
-        public void StartStationStatusObserver(Action<FlightContent> action)
+        public void StartStationStatusObserver(Action<FlightContent> action,string stationKey)
         {
             _actionStatus = action;
 
             var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
-            var childNode = rootNode.GetChild("station").GetChild(_stationKey).GetChild("flights")
+            var childNode = rootNode.GetChild("station").GetChild(stationKey).GetChild("flights")
                                     .GetQueryOrderedByChild("EpochTime").GetQueryLimitedToLast(1);
             childNode.ObserveSingleEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
             {

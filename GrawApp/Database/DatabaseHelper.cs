@@ -167,6 +167,23 @@ namespace GrawApp.Database
         //    return list;
         //}
 
+        public static List<Station> GetAllStationsFromUser(string userKey)
+        {
+            using (var conn = new SQLiteConnection(new SQLitePlatformIOS(), GetPath()))
+            {
+                conn.CreateTable<UserStation>();
+
+                var query = conn.Table<UserStation>().FirstOrDefault(x => x.UserKey == userKey);
+                if (query == null)
+                {
+                    return null;
+                }
+                var station = conn.Table<Station>().Where(x => x.Key == query.StationKey).ToList();
+                return station;
+            }
+        }
+
+
         public static Station GetDefaultStation(string userKey)
         {
             using (var conn = new SQLiteConnection(new SQLitePlatformIOS(),GetPath()))

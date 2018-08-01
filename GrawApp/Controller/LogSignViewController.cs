@@ -24,11 +24,13 @@ namespace GrawApp
             var userName = plist.StringForKey("username");
             var password = plist.StringForKey("password");
             var firstCall = plist.BoolForKey("firstcall");
-
+            var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+            appDelegate.UserId = "";
             if (userName != null && password != null &&
-              firstCall)
+                appDelegate.FirstCall)
             {
                 LoginAndMove(userName, password);
+                appDelegate.FirstCall = false;
             }
         }
 
@@ -44,6 +46,9 @@ namespace GrawApp
             {
                 if(error == null)
                 {
+                    var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+                    appDelegate.UserId = Auth.DefaultInstance.CurrentUser.Uid;
+
                     var plist = NSUserDefaults.StandardUserDefaults;
                     plist.SetString(userName,"username");
                     plist.SetString(password,"password");
@@ -52,7 +57,7 @@ namespace GrawApp
                     if(ActiveStation != null)
                     {
 
-                        var appDelegate = UIApplication.SharedApplication.Delegate as AppDelegate;
+                       
                         appDelegate.ActiveStation = ActiveStation;
 
                         var storyboard = UIStoryboard.FromName("Main", null);
