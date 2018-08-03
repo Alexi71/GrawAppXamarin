@@ -21,6 +21,7 @@ namespace GrawApp
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
             EdgesForExtendedLayout = UIRectEdge.None;
             this.DidFinishAnimating += (sender, e) => {
                 if (e.Completed)

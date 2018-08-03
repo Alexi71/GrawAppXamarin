@@ -7,3 +7,17 @@
 "Time" = "Uhrzeit";
 "Delete flight" ="Aufstieg löschen?";
 "FLIGHT_DELETE_CONFIRMATION" = "Sind sie sicher den Aufstieg vom ###REPLACE### permanent zu löschen?";
+"Temperature" = "Temperatur";
+"Humidity" = "Feuchte";
+"Pressure" = "Druck";
+"Wind speed" = "Windgeschw.";
+"Time in min" = "Zeit in min";
+"Altitude in Meter" = "Höhe in Meter";
+"Pressure in mB" = "Druck in mB";
+"Dewpoint" = "Taupunkt";
+"Temperature/Dewpoint in °C" = "Temperatur/Taupunkt in °C";
+"Starting Point" = "Startpunkt";
+"End Point" = "Endpunkt";
+"no data available" = "Keine Daten vorhanden";
+"SETTINGS" = "OPTIONEN";
+"STATIONS" = "MEINE STATIONEN";

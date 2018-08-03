@@ -8,6 +8,7 @@ using MapKit;
 using CoreLocation;
 using System.Collections.Generic;
 using System.Linq;
+using GrawApp.Helper;
 
 namespace GrawApp
 {
@@ -58,13 +59,13 @@ namespace GrawApp
                                                               distance + 10000, distance + 10000);
                 mapView.SetRegion(region, animated: false);
 
-                var annoStart = new FlightAnnotation(title: "Starting point",
+                var annoStart = new FlightAnnotation(title: "Starting Point".GetLocalString(),
                                                      subtitle: "",
                                                      coordinate: locations[0]);
                 mapView.AddAnnotation(annoStart);
 
 
-                var annoEnd = new FlightAnnotation(title: "End point",
+                var annoEnd = new FlightAnnotation(title: "End Point".GetLocalString(),
                                                    subtitle: "",
                                                    coordinate: locations.Last());
                 annoEnd.TintColor = UIColor.Purple;

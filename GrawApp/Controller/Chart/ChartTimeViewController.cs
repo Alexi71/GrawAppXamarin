@@ -7,6 +7,7 @@ using CoreGraphics;
 using System.Collections.Generic;
 using System.Collections;
 using GrawApp.Database;
+using GrawApp.Helper;
 
 namespace GrawApp
 {
@@ -67,13 +68,13 @@ namespace GrawApp
             axisX.Interval = new NSNumber(600);
            
                  
-            axisX.Title.Text = new NSString("Time in min");
+            axisX.Title.Text = new NSString("Time in min".GetLocalString());
             var axisY = new SFNumericalAxis();
             axisY.Visible = false;
             Chart.PrimaryAxis = axisX;
             Chart.SecondaryAxis = axisY;
 
-            var temperaturSeries = GetSeries(Data, "Temperature", "Time", "Temperature",
+            var temperaturSeries = GetSeries(Data, "Temperature".GetLocalString(), "Time", "Temperature",
                                              Colors["Temperature"],
                                           false, 0, 0, false, 0, 100);
            
@@ -81,7 +82,7 @@ namespace GrawApp
 
             Chart.Series.Add(temperaturSeries);
 
-            var humditySeries = GetSeries(Data, "Humidity", "Time", "Humidity",
+            var humditySeries = GetSeries(Data, "Humidity".GetLocalString(), "Time", "Humidity",
                                           Colors["Humidity"],
                                           false, 0, 0, true, 0, 100,true, true, false, false);
 
@@ -89,34 +90,34 @@ namespace GrawApp
             Chart.Series.Add(humditySeries);
 
 
-            var series = GetSeries(Data, "Pressure", "Time", "Pressure",
+            var series = GetSeries(Data, "Pressure".GetLocalString(), "Time", "Pressure",
                                    Colors["Pressure"],
                                    false, 0, 0, true, 1, 1200,true, true, false, false,false,true);
 
 
             Chart.Series.Add(series);
 
-            series = GetSeries(Data, "Wind speed", "Time", "WindSpeed",
+            series = GetSeries(Data, "Wind speed".GetLocalString(), "Time", "WindSpeed",
                                Colors["WindSpeed"],
                                false, 0, 0, true, 0, 150,true, true, false, false);
             Chart.Series.Add(series);
 
-            var pointSeries = GetPointSeries(ReducedData, "Temperature", "Time", "Temperature",
+            var pointSeries = GetPointSeries(ReducedData, "Temperature".GetLocalString(), "Time", "Temperature",
                                              Colors["Temperature"],
                                           false, 0, 0, false, 0, 100);
             Chart.Series.Add(pointSeries);
 
-            pointSeries = GetPointSeries(ReducedData, "Humidity", "Time", "Humidity",
+            pointSeries = GetPointSeries(ReducedData, "Humidity".GetLocalString(), "Time", "Humidity",
                                           Colors["Humidity"],
                                           false, 0, 0, true, 0, 100,true,true,false,false);
             Chart.Series.Add(pointSeries);
 
-            pointSeries = GetPointSeries(ReducedData, "Pressure", "Time", "Pressure",
+            pointSeries = GetPointSeries(ReducedData, "Pressure".GetLocalString(), "Time", "Pressure",
                                    Colors["Pressure"],
                                          false, 0, 0, true, 1, 1200, true, true, false, false, false, true);
             Chart.Series.Add(pointSeries);
 
-            pointSeries = GetPointSeries(ReducedData, "Wind speed", "Time", "WindSpeed",
+            pointSeries = GetPointSeries(ReducedData, "Wind speed".GetLocalString(), "Time", "WindSpeed",
                                Colors["WindSpeed"],
                                          false, 0, 0, true, 0, 150, true, true, false, false);
             Chart.Series.Add(pointSeries);

@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using CoreGraphics;
 using Foundation;
+using GrawApp.Helper;
 using GrawApp.Model;
 using Syncfusion.SfBusyIndicator.iOS;
 using UIKit;
@@ -60,7 +61,7 @@ namespace GrawApp.Controller.Messages
             if((isHundred && string.IsNullOrEmpty(Flight.Url100) ||
                 (!isHundred && string.IsNullOrEmpty(Flight.UrlEnd))))
             {
-                UpdateText("no data available");
+                UpdateText("no data available".GetLocalString());
                 return;
             }
             var url = new Uri(isHundred?Flight.Url100:Flight.UrlEnd); 

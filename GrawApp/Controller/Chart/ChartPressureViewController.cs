@@ -4,6 +4,7 @@ using System;
 using CoreGraphics;
 using Foundation;
 using GrawApp.Controller;
+using GrawApp.Helper;
 using Syncfusion.SfChart.iOS;
 using UIKit;
 
@@ -74,7 +75,7 @@ namespace GrawApp
                 ShowMajorGridLines = true
                     
             };
-            axisY.Title.Text = new NSString("Pressure in mB");
+            axisY.Title.Text = new NSString("Pressure in mB".GetLocalString());
             var axisX = new SFNumericalAxis()
             {
                 Maximum = new NSNumber(40),
@@ -83,12 +84,12 @@ namespace GrawApp
                 Interval = new NSNumber(10)
             };
 
-            axisX.Title.Text = new NSString("Temperature/Dewpoint in °C");
+            axisX.Title.Text = new NSString("Temperature/Dewpoint in °C".GetLocalString());
 
             Chart.PrimaryAxis = axisX;
             Chart.SecondaryAxis = axisY;
 
-            var temperaturSeries = GetSeries(Data, "Temperature", "Temperature", "Pressure",
+            var temperaturSeries = GetSeries(Data, "Temperature".GetLocalString(), "Temperature", "Pressure",
                                              Colors["Temperature"],
                                           false, 0, 0, false, 0, 100,true,true);
 
@@ -96,7 +97,7 @@ namespace GrawApp
 
             Chart.Series.Add(temperaturSeries);
 
-            var humditySeries = GetSeries(Data, "Dewpoint", "Dewpoint", "Pressure",
+            var humditySeries = GetSeries(Data, "Dewpoint".GetLocalString(), "Dewpoint", "Pressure",
                                           Colors["Humidity"],
                                           false, 0, 100, false, 0, 100, false, false, false);
 

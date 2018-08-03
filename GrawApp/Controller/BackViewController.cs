@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using GrawApp.Database;
 using Firebase.Auth;
 using Xamarin.SWRevealViewController;
+using GrawApp.Helper;
 
 namespace GrawApp
 {
@@ -91,11 +92,11 @@ namespace GrawApp
         {
             if (section == 0)
             {
-                return "SETTINGS";
+                return "SETTINGS".GetLocalString();
             }
             else
             {
-                return "STATIONS";
+                return "STATIONS".GetLocalString();
             }
         }
 
