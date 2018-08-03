@@ -16,6 +16,7 @@ using Syncfusion.SfBusyIndicator.iOS;
 using System.Linq;
 using GrawApp.Helper;
 using CoreGraphics;
+using GrawApp.FirebaseHelper;
 
 namespace GrawApp
 {
@@ -24,9 +25,6 @@ namespace GrawApp
 
 
         NSUserDefaults _plist;
-        string WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather";
-        string APP_ID = "e72ca729af228beabd5d20e3b7749713";
-        //WeatherData WeatherInformation;
         CLLocationManager locationManager = new CLLocationManager();
         public Station ActiveStation { get; private set; }
         TableSourceStationInformation TableSource = new TableSourceStationInformation();
@@ -79,7 +77,16 @@ namespace GrawApp
             GetAnnotationOfStation();
             if (ActiveStation != null)
             {
-                GetWeatherData(double.Parse(ActiveStation.Latitude), double.Parse(ActiveStation.Longitude));
+                WeatherInformation.GetWeatherData(double.Parse(ActiveStation.Latitude), double.Parse(ActiveStation.Longitude),
+                                                  (WeatherData data) =>
+                                                  {
+                                                      data.IconName = data.GetWeatherIcon(data.Condition);
+                                                      InvokeOnMainThread(() =>
+                                                      {
+                                                          UpdateUIWeatherInformation(data);
+                                                      });
+                                                  });
+               // GetWeatherData(double.Parse(ActiveStation.Latitude), double.Parse(ActiveStation.Longitude));
             }
 
             InitializeDatabase();
@@ -137,103 +144,139 @@ namespace GrawApp
 
         #region Firebase
 
+        void UpdateTableData(FlightContent data)
+        {
+            InvokeOnMainThread(() =>
+            {
+                TableSource.FlightList.Add(data);
+                tableView.ReloadData();
+                View.SetNeedsDisplay();
+                ActivityIndicator.StopAnimating();
+                Console.WriteLine("Flight added");
+            });
+        }
+
+        void DeleteTableDate(FlightContent data)
+        {
+            var index = TableSource.FlightList.FindIndex(x => x.Key == data.Key);
+            InvokeOnMainThread(() =>
+            {
+                //TableSource.FlightList.RemoveAt(index);
+                //tableView.BeginUpdates();
+                tableView.ReloadData();
+                View.SetNeedsDisplay();
+                //tableView.EndUpdates();
+                ActivityIndicator.StopAnimating();
+                Console.WriteLine("Flight deleted");
+            });
+        }
+
         void InitializeDatabase()
         {
             //BusyIndicator.Hidden = false;
             ActivityIndicator.StartAnimating();
             TableSource.FlightList.Clear();
             tableView.ReloadData();
-            var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
-            var childNode = rootNode.GetChild("station").GetChild(ActiveStation.Key).GetChild("flights");
-                                   /* .GetQueryOrderedByChild("EpochTime")
-                                    .GetQueryStartingAtValue(NSObject.FromObject(_startTime.GetUnixEpoch()))
-                                    .GetQueryEndingAtValue(NSObject.FromObject(_endTime.GetUnixEpoch()));*/
+
+
+            var fireBaseHelper = new FireBaseHelper();
+
+            fireBaseHelper.StartFlightFromStationObserver(UpdateTableData, DeleteTableDate,
+                                                          ActiveStation.Key,
+                                                          _startTime, _endTime);
             
-            var referenceNode = childNode.ObserveEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
-            {
-                var flightData = GetFlightDataFromSnapshot(snapshot);
-                InvokeOnMainThread(() =>
-                {
-                    TableSource.FlightList.Add(flightData);
-                    tableView.ReloadData();
-                    View.SetNeedsDisplay();
-                    ActivityIndicator.StopAnimating();
-                    Console.WriteLine("Flight added");
-                });
-            });
 
-            var changeNode = childNode.ObserveEvent(DataEventType.Value, (snapshot, prevKey) =>
-            {
-                if (snapshot == null || !snapshot.HasChildren)
-                {
-                    InvokeOnMainThread(() =>
-                    {
-                        ActivityIndicator.StopAnimating();
-                        Console.WriteLine("Flight added");
-                    });
-                }
-            });
+            //var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
+            //var childNode = rootNode.GetChild("station").GetChild(ActiveStation.Key).GetChild("flights");
+            //                       /* .GetQueryOrderedByChild("EpochTime")
+            //                        .GetQueryStartingAtValue(NSObject.FromObject(_startTime.GetUnixEpoch()))
+            //                        .GetQueryEndingAtValue(NSObject.FromObject(_endTime.GetUnixEpoch()));*/
+            
+            //var referenceNode = childNode.ObserveEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
+            //{
+            //    var flightData = GetFlightDataFromSnapshot(snapshot);
+            //    InvokeOnMainThread(() =>
+            //    {
+            //        TableSource.FlightList.Add(flightData);
+            //        tableView.ReloadData();
+            //        View.SetNeedsDisplay();
+            //        ActivityIndicator.StopAnimating();
+            //        Console.WriteLine("Flight added");
+            //    });
+            //});
+
+            //var changeNode = childNode.ObserveEvent(DataEventType.Value, (snapshot, prevKey) =>
+            //{
+            //    if (snapshot == null || !snapshot.HasChildren)
+            //    {
+            //        InvokeOnMainThread(() =>
+            //        {
+            //            ActivityIndicator.StopAnimating();
+            //            Console.WriteLine("Flight added");
+            //        });
+            //    }
+            //});
 
 
-            var deleteNode = childNode.ObserveEvent(DataEventType.ChildRemoved, (snapshot, prevKey) =>
-            {
-                var flightData = GetFlightDataFromSnapshot(snapshot);
-                var index = TableSource.FlightList.FindIndex(x => x.Key == flightData.Key);
-                InvokeOnMainThread(() =>
-                {
-                    //TableSource.FlightList.RemoveAt(index);
-                    //tableView.BeginUpdates();
-                    tableView.ReloadData();
-                    View.SetNeedsDisplay();
-                    //tableView.EndUpdates();
-                    ActivityIndicator.StopAnimating();
-                    Console.WriteLine("Flight deleted");
-                });
+            //var deleteNode = childNode.ObserveEvent(DataEventType.ChildRemoved, (snapshot, prevKey) =>
+            //{
+            //    var flightData = GetFlightDataFromSnapshot(snapshot);
+            //    var index = TableSource.FlightList.FindIndex(x => x.Key == flightData.Key);
+            //    InvokeOnMainThread(() =>
+            //    {
+            //        //TableSource.FlightList.RemoveAt(index);
+            //        //tableView.BeginUpdates();
+            //        tableView.ReloadData();
+            //        View.SetNeedsDisplay();
+            //        //tableView.EndUpdates();
+            //        ActivityIndicator.StopAnimating();
+            //        Console.WriteLine("Flight deleted");
+            //    });
 
-            });
+            //});
         }
 
-        private  FlightContent GetFlightDataFromSnapshot(DataSnapshot snapshot)
-        {
-            var data = snapshot.GetValue<NSDictionary>();
-            Console.WriteLine(snapshot.Key);
-            FlightContent flightData = new FlightContent();
-            flightData.Key = snapshot.Key;
-            if (data["Date"] != null)
-                flightData.Date = Convert.ToString(data["Date"]);
-            if (data["Time"] != null)
-                flightData.Time = Convert.ToString(data["Time"]);
-            if (data["FileName"] != null)
-                flightData.FileName = Convert.ToString(data["FileName"]);
-            if (data["Url"] != null)
-                flightData.Url = Convert.ToString(data["Url"]);
-            if (data["Url100"] != null)
-                flightData.Url100 = Convert.ToString(data["Url100"]);
-            if (data["UrlEnd"] != null)
-                flightData.UrlEnd = Convert.ToString(data["UrlEnd"]);
-            if (data["IsRealTimeDataAvailable"] != null)
-            {
-                if (data["IsRealTimeDataAvailable"] is NSNumber)
-                {
-                    var x = (NSNumber)data["IsRealTimeDataAvailable"];
-                    var ob = x.BoolValue;
-                    flightData.IsRealTimeFlight = Convert.ToBoolean(ob);
-                }
+        //private  FlightContent GetFlightDataFromSnapshot(DataSnapshot snapshot)
+        //{
+        //    var data = snapshot.GetValue<NSDictionary>();
+        //    Console.WriteLine(snapshot.Key);
+        //    FlightContent flightData = new FlightContent();
+        //    flightData.Key = snapshot.Key;
+        //    if (data["Date"] != null)
+        //        flightData.Date = Convert.ToString(data["Date"]);
+        //    if (data["Time"] != null)
+        //        flightData.Time = Convert.ToString(data["Time"]);
+        //    if (data["FileName"] != null)
+        //        flightData.FileName = Convert.ToString(data["FileName"]);
+        //    if (data["Url"] != null)
+        //        flightData.Url = Convert.ToString(data["Url"]);
+        //    if (data["Url100"] != null)
+        //        flightData.Url100 = Convert.ToString(data["Url100"]);
+        //    if (data["UrlEnd"] != null)
+        //        flightData.UrlEnd = Convert.ToString(data["UrlEnd"]);
+        //    if (data["IsRealTimeDataAvailable"] != null)
+        //    {
+        //        if (data["IsRealTimeDataAvailable"] is NSNumber)
+        //        {
+        //            var x = (NSNumber)data["IsRealTimeDataAvailable"];
+        //            var ob = x.BoolValue;
+        //            flightData.IsRealTimeFlight = Convert.ToBoolean(ob);
+        //        }
 
 
-            }
-            if (data["EpochTime"] != null)
-            {
-                if (data["EpochTime"] is NSNumber)
-                {
-                    var x = (NSNumber)data["EpochTime"];
-                    var ob = x.DoubleValue;
-                    flightData.EpochTime = Convert.ToDouble(ob);
-                }
-            }
+        //    }
+        //    if (data["EpochTime"] != null)
+        //    {
+        //        if (data["EpochTime"] is NSNumber)
+        //        {
+        //            var x = (NSNumber)data["EpochTime"];
+        //            var ob = x.DoubleValue;
+        //            flightData.EpochTime = Convert.ToDouble(ob);
+        //        }
+        //    }
 
-            return flightData;
-        }
+        //    return flightData;
+        //}
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
         {
@@ -251,69 +294,69 @@ namespace GrawApp
 
 
         #region Weather data from open weather API
-        void GetWeatherData(double latitude, double longitude)
-        {
-            var uri = $"{WEATHER_URL}?lat={latitude}&long={longitude}&appip={APP_ID}";
-            var client = new RestClient(WEATHER_URL);
+        //void GetWeatherData(double latitude, double longitude)
+        //{
+        //    var uri = $"{WEATHER_URL}?lat={latitude}&long={longitude}&appip={APP_ID}";
+        //    var client = new RestClient(WEATHER_URL);
 
-            var request = new RestRequest();
-            request.AddQueryParameter("lat", latitude.ToString());
-            request.AddQueryParameter("lon", longitude.ToString());
-            request.AddQueryParameter("appid", APP_ID);
+        //    var request = new RestRequest();
+        //    request.AddQueryParameter("lat", latitude.ToString());
+        //    request.AddQueryParameter("lon", longitude.ToString());
+        //    request.AddQueryParameter("appid", APP_ID);
 
-            //var response = client.Execute(request);
-            WeatherData data = new WeatherData();
-            client.ExecuteAsync(request, response =>
-            {
-                Console.WriteLine(response.Content);
-                RestSharp.Deserializers.JsonDeserializer deserial = new RestSharp.Deserializers.JsonDeserializer();
-                //dynamic results = JsonConvert.DeserializeObject(response.Content);
-                //var results = JsonConvert.DeserializeObject<Dictionary<string,string[]>>(response.Content);
+        //    //var response = client.Execute(request);
+        //    WeatherData data = new WeatherData();
+        //    client.ExecuteAsync(request, response =>
+        //    {
+        //        Console.WriteLine(response.Content);
+        //        RestSharp.Deserializers.JsonDeserializer deserial = new RestSharp.Deserializers.JsonDeserializer();
+        //        //dynamic results = JsonConvert.DeserializeObject(response.Content);
+        //        //var results = JsonConvert.DeserializeObject<Dictionary<string,string[]>>(response.Content);
 
-                //  var coord = results["coord"];
-                //var lon = coord["lon"];
-                //Console.WriteLine($"longitude:{lon.Value}");
-                //var main = results["main"][0];
+        //        //  var coord = results["coord"];
+        //        //var lon = coord["lon"];
+        //        //Console.WriteLine($"longitude:{lon.Value}");
+        //        //var main = results["main"][0];
 
 
-                var jsonObject = deserial.Deserialize<Dictionary<string, string>>(response);
-                foreach (var item in jsonObject)
-                {
-                    Console.WriteLine($"{item.Key} {item.Value}");
+        //        var jsonObject = deserial.Deserialize<Dictionary<string, string>>(response);
+        //        foreach (var item in jsonObject)
+        //        {
+        //            Console.WriteLine($"{item.Key} {item.Value}");
 
-                    if (item.Key == "name")
-                    {
-                        Console.WriteLine($"City: {item.Value}");
-                        data.City = item.Value;
-                    }
+        //            if (item.Key == "name")
+        //            {
+        //                Console.WriteLine($"City: {item.Value}");
+        //                data.City = item.Value;
+        //            }
 
-                    if (item.Key == "weather")
-                    {
-                        var res = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(item.Value);
-                        Console.WriteLine($"{res[0]["id"]}");
-                        data.Condition = int.Parse(res[0]["id"]);
-                    }
+        //            if (item.Key == "weather")
+        //            {
+        //                var res = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(item.Value);
+        //                Console.WriteLine($"{res[0]["id"]}");
+        //                data.Condition = int.Parse(res[0]["id"]);
+        //            }
 
-                    if (item.Key == "main")
-                    {
-                        var res = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.Value);
-                        Console.WriteLine($"Temperature is: {res["temp"]}");
+        //            if (item.Key == "main")
+        //            {
+        //                var res = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.Value);
+        //                Console.WriteLine($"Temperature is: {res["temp"]}");
 
-                        data.Temperature = double.Parse(res["temp"]) - 273.15;
-                    }
-                    //Console.WriteLine("Stop");
-                }
-                //var myObj = jsonObject["main"];
+        //                data.Temperature = (res["temp"]).ToDouble() - 273.15;
+        //            }
+        //            //Console.WriteLine("Stop");
+        //        }
+        //        //var myObj = jsonObject["main"];
 
-                //Console.WriteLine(jsonObject["main"]);
-                data.IconName = data.GetWeatherIcon(data.Condition);
-                InvokeOnMainThread(() =>
-                {
-                    UpdateUIWeatherInformation(data);
-                });
-            });
+        //        //Console.WriteLine(jsonObject["main"]);
+        //        data.IconName = data.GetWeatherIcon(data.Condition);
+        //        InvokeOnMainThread(() =>
+        //        {
+        //            UpdateUIWeatherInformation(data);
+        //        });
+        //    });
 
-        }
+        //}
 
         void UpdateUIWeatherInformation(WeatherData data)
         {
@@ -372,8 +415,10 @@ namespace GrawApp
         {
             var cell = tableView.DequeueReusableCell("cellId") as UITableViewCell;
 
-            cell.TextLabel.Text = $"Date: {FlightList[indexPath.Row].EpochTime.FromUnixTime():dd.MM.yyyy}";//  {FlightList[indexPath.Row].Time}";
-            cell.DetailTextLabel.Text = $"Time: {FlightList[indexPath.Row].EpochTime.FromUnixTime():HH:mm} UTC";
+            var dateString = "Date".GetLocalString();
+            var timeString = "Time".GetLocalString();
+            cell.TextLabel.Text = $"{dateString}: {FlightList[indexPath.Row].EpochTime.FromUnixTime():dd.MM.yyyy}";//  {FlightList[indexPath.Row].Time}";
+            cell.DetailTextLabel.Text = $"{timeString}: {FlightList[indexPath.Row].EpochTime.FromUnixTime():HH:mm} UTC";
             if(FlightList[indexPath.Row].IsRealTimeFlight)
             {
                 cell.TextLabel.TextColor = UIColor.Red;
@@ -463,20 +508,21 @@ namespace GrawApp
             } 
         }
 
-        void ConfirmDelete(FlightContent flight,UITableView tableView)
+        void ConfirmDelete(FlightContent flight, UITableView tableView)
         {
-            var okCancelAlertController = UIAlertController.Create("Delete flight",
-                                                                   $"Are you sure you want to permanently delete flight from {flight.Date}/{flight.Time}? ",
+            var confirmationString = "FLIGHT_DELETE_CONFIRMATION".GetLocalString().Replace("###REPLACE###", $"{flight.Date}/{flight.Time}");
+            var okCancelAlertController = UIAlertController.Create("Delete flight".GetLocalString(),
+                                                                   confirmationString,
                                                                    UIAlertControllerStyle.Alert);
 
             //Add Actions
-            okCancelAlertController.AddAction(UIAlertAction.Create("OK",
+            okCancelAlertController.AddAction(UIAlertAction.Create("OK".GetLocalString(),
                                                                    UIAlertActionStyle.Default,
                                                                    alert => {
                                                                        Console.WriteLine("Okay was clicked");
                 DeleteFlight(flight,tableView);
             }));
-            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel",
+            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel".GetLocalString(),
                                                                    UIAlertActionStyle.Cancel,
                                                                    alert => Console.WriteLine("Cancel was clicked")));
 

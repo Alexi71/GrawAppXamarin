@@ -176,8 +176,8 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <InterfaceDefinition Include="View\Main.storyboard" />
     <InterfaceDefinition Include="View\LaunchScreen.storyboard" />
+    <InterfaceDefinition Include="Base.lproj\Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -301,6 +301,7 @@
     </Compile>
     <Compile Include="Model\StationFlightInfo.cs" />
     <Compile Include="Repository\StationFlightStatusRepository.cs" />
+    <Compile Include="Helper\WeatherInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Wetterstation_500px_72dpi.jpg" />
@@ -345,10 +346,17 @@
     <BundleResource Include="Resources\vertical_double_arrow.png" />
     <BundleResource Include="Resources\g5_status_16x16_gruen_heller.png" />
     <BundleResource Include="Resources\g5_status_32x32_gruen_heller.png" />
+    <BundleResource Include="Resources\de.lproj\Main.strings" />
+    <BundleResource Include="Resources\en.lproj\Main.strings" />
+    <BundleResource Include="Resources\de.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\en.lproj\Localizable.strings" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\" />
     <Folder Include="Repository\" />
+    <Folder Include="Base.lproj\" />
+    <Folder Include="Resources\en.lproj\" />
+    <Folder Include="Resources\de.lproj\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.6\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.6\build\Xamarin.Build.Download.targets')" />

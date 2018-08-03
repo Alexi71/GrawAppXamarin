@@ -1,0 +1,8 @@
+﻿"Station Status" = "Station Status";
+"OK" = "OK";
+"Cancel" = "Cancel";
+"STATION_DELETE_CONFIRMATION" = "Are you sure to remove the station ###REPLACE### from your list? ";
+"Date" = "Date";
+"Time" = "Time";
+"Delete flight" = "Delete flight";
+"FLIGHT_DELETE_CONFIRMATION" = "Are you sure you want to permanently delete flight from ###REPLACE### ?";

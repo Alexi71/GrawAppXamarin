@@ -5,6 +5,7 @@ using System;
 using Foundation;
 using GrawApp.Database;
 using GrawApp.FirebaseHelper;
+using GrawApp.Helper;
 using GrawApp.Model;
 using GrawApp.Repository;
 using UIKit;
@@ -25,7 +26,7 @@ namespace GrawApp.View
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
+            Title = "Station Status".GetLocalString();
             _firebaseHelper = new FireBaseHelper();
             _datasource = new StationStatusTableViewDataSource(){ViewController = this};
             TableView.Source = _datasource;
@@ -99,18 +100,19 @@ namespace GrawApp.View
 
         void ConfirmDelete(StationFlightInfo item, UITableView tableView)
         {
-            var okCancelAlertController = UIAlertController.Create("Delete station from list",
-                                                                   $"Are you sure to remove the station {item.Station.Name} from your list? ",
+            var confirmationString = "STATION_DELETE_CONFIRMATION".GetLocalString().Replace("###REPLACE###", item.Station.Name);
+            var okCancelAlertController = UIAlertController.Create("Delete station from list".GetLocalString(),
+                                                                   confirmationString,
                                                                    UIAlertControllerStyle.Alert);
 
             //Add Actions
-            okCancelAlertController.AddAction(UIAlertAction.Create("OK",
+            okCancelAlertController.AddAction(UIAlertAction.Create("OK".GetLocalString(),
                                                                    UIAlertActionStyle.Default,
                                                                    alert => {
                                                                        Console.WriteLine("Okay was clicked");
                                                                        //DeleteFlight(flight, tableView);
                                                                    }));
-            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel",
+            okCancelAlertController.AddAction(UIAlertAction.Create("Cancel".GetLocalString(),
                                                                    UIAlertActionStyle.Cancel,
                                                                    alert => Console.WriteLine("Cancel was clicked")));
 

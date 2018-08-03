@@ -1,0 +1,9 @@
+﻿"Station Status" = "Stationsübersicht";
+"OK" = "OK";
+"Cancel" = "Abbrechen";
+"STATION_DELETE_CONFIRMATION" = "Sind Sie sicher die Station ###REPLACE### von Ihrer Liste zu entfernen? ";
+"Delete station from list" = "Station aus Liste löschen?";
+"Date" = "Datum";
+"Time" = "Uhrzeit";
+"Delete flight" ="Aufstieg löschen?";
+"FLIGHT_DELETE_CONFIRMATION" = "Sind sie sicher den Aufstieg vom ###REPLACE### permanent zu löschen?";

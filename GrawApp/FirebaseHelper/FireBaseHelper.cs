@@ -13,7 +13,8 @@ namespace GrawApp.FirebaseHelper
         private readonly string _stationKey;
         private readonly string _flightKey;
         Action<RawData> _action;
-        Action<FlightContent> _actionStatus;
+        Action<FlightContent> _actionFlightContent;
+        Action<FlightContent> _actionDeleteFlight;
         public FireBaseHelper()
         {
         }
@@ -43,7 +44,7 @@ namespace GrawApp.FirebaseHelper
 
         public void StartStationStatusObserver(Action<FlightContent> action,string stationKey)
         {
-            _actionStatus = action;
+            _actionFlightContent = action;
 
             var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
             var childNode = rootNode.GetChild("station").GetChild(stationKey).GetChild("flights")
@@ -52,9 +53,39 @@ namespace GrawApp.FirebaseHelper
             {
 
                 var data = GetFlightDataFromSnapshot(snapshot);
-                _actionStatus?.Invoke(data);
+                _actionFlightContent?.Invoke(data);
             });
         }
+
+
+        public void StartFlightFromStationObserver(Action<FlightContent> action, 
+                                                   Action<FlightContent> deleteAction,
+                                                   string stationKey,
+                                                  DateTime startTime, DateTime endTime)
+        {
+            _actionFlightContent = action;
+            _actionDeleteFlight = deleteAction;
+            var rootNode = Firebase.Database.Database.DefaultInstance.GetRootReference();
+            var childNode = rootNode.GetChild("station").GetChild(stationKey).GetChild("flights");
+                                   /* .GetQueryOrderedByChild("EpochTime")
+                                    .GetQueryStartingAtValue(NSObject.FromObject(_startTime.GetUnixEpoch()))
+                                    .GetQueryEndingAtValue(NSObject.FromObject(_endTime.GetUnixEpoch()));*/
+            
+            childNode.ObserveEvent(DataEventType.ChildAdded, (snapshot, prevKey) =>
+            {
+
+                var data = GetFlightDataFromSnapshot(snapshot);
+                _actionFlightContent?.Invoke(data);
+            });
+
+            var deleteNode = childNode.ObserveEvent(DataEventType.ChildRemoved, (snapshot, prevKey) =>
+            {
+                var flightData = GetFlightDataFromSnapshot(snapshot);
+                _actionDeleteFlight?.Invoke(flightData);
+            });
+        }
+
+
 
 
 

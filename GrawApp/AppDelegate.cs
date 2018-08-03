@@ -5,6 +5,8 @@ using Xamarin.SWRevealViewController;
 using GrawApp.Database;
 using System.Collections.Generic;
 using GrawApp.Model;
+using System.Globalization;
+using System.Threading;
 
 namespace GrawApp
 {
@@ -34,6 +36,7 @@ namespace GrawApp
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
             App.Configure();
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             FrontViewPosition pos = FrontViewPosition.Left;
             UIApplication.SharedApplication.StatusBarStyle = UIStatusBarStyle.LightContent;
             UINavigationBar.Appearance.Translucent = false;

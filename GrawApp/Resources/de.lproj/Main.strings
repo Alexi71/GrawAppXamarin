@@ -1,0 +1,114 @@
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "4699"; */
+"4699.placeholder" = "Email";
+
+/* Class = "UITextField"; text = "123@aa.com"; ObjectID = "4699"; */
+"4699.text" = "123@aa.com";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "4715"; */
+"4715.title" = "Title";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "5329"; */
+"5329.placeholder" = "Passwort";
+
+/* Class = "UITextField"; text = "123456"; ObjectID = "5329"; */
+"5329.text" = "123456";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "5330"; */
+"5330.normalTitle" = "Anmelden";
+
+/* Class = "UIButton"; normalTitle = "Sign up"; ObjectID = "5331"; */
+"5331.normalTitle" = "Sign up";
+
+/* Class = "UINavigationItem"; title = "Station"; ObjectID = "8279"; */
+"8279.title" = "Station";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "8282"; */
+"8282.title" = "Item";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "9352"; */
+"9352.text" = "Title";
+
+/* Class = "UILabel"; text = "Add"; ObjectID = "9353"; */
+"9353.text" = "Hunzufügen";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "9354"; */
+"9354.text" = "Einstellungen";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "9355"; */
+"9355.text" = "Status";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "24935"; */
+"24935.title" = "Title";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "24938"; */
+"24938.title" = "Item";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "40318"; */
+"40318.text" = "Title";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "40319"; */
+"40319.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "3.5 °C"; ObjectID = "41416"; */
+"41416.text" = "3.5 °C";
+
+/* Class = "UILabel"; text = "Connecting"; ObjectID = "41417"; */
+"41417.text" = "Connecting";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "43666"; */
+"43666.title" = "Zurück";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "0Gz-2E-fwg"; */
+"0Gz-2E-fwg.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "23.07.18 -30.07.18"; ObjectID = "3TX-TR-hCg"; */
+"3TX-TR-hCg.text" = "23.07.18 -30.07.18";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "8Tx-4E-bBH"; */
+"8Tx-4E-bBH.text" = "Title";
+
+/* Class = "UILabel"; text = "Logout"; ObjectID = "DhQ-IB-6Ri"; */
+"DhQ-IB-6Ri.text" = "Abmelden";
+
+/* Class = "UINavigationItem"; title = "Station Status"; ObjectID = "NYk-zw-Fwe"; */
+"NYk-zw-Fwe.title" = "Station Status";
+
+/* Class = "UILabel"; text = "GPS"; ObjectID = "Oh0-Bf-Awz"; */
+"Oh0-Bf-Awz.text" = "GPS";
+
+/* Class = "UILabel"; text = "SENSOR"; ObjectID = "Q2v-fM-fx1"; */
+"Q2v-fM-fx1.text" = "SENSOR";
+
+/* Class = "UILabel"; text = "Update: 23:00:03 UTC"; ObjectID = "SNb-CG-kBm"; */
+"SNb-CG-kBm.text" = "Update: 23:00:03 UTC";
+
+/* Class = "UITabBarItem"; title = "Item 2"; ObjectID = "Sgq-Ae-RGa"; */
+"Sgq-Ae-RGa.title" = "Item 2";
+
+/* Class = "UILabel"; text = "TELEMETRY"; ObjectID = "Tpm-gf-Y2J"; */
+"Tpm-gf-Y2J.text" = "TELEMETRY";
+
+/* Class = "UILabel"; text = "Start Time: 23:00:00"; ObjectID = "afF-lS-0f5"; */
+"afF-lS-0f5.text" = "Startzeit: 23:00:00";
+
+/* Class = "UITabBarItem"; title = "Item 1"; ObjectID = "bnN-pQ-OiV"; */
+"bnN-pQ-OiV.title" = "Item 1";
+
+/* Class = "UIBarButtonItem"; title = "Back"; ObjectID = "cNT-1u-k4x"; */
+"cNT-1u-k4x.title" = "Zurück";
+
+/* Class = "UILabel"; text = "Temperature"; ObjectID = "fAO-JQ-JFN"; */
+"fAO-JQ-JFN.text" = "Temperatur";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "gg4-cP-b3F"; */
+"gg4-cP-b3F.title" = "Item";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "jug-Zt-WQB"; */
+"jug-Zt-WQB.text" = "Title";
+
+/* Class = "UILabel"; text = "20.0 °C"; ObjectID = "loh-tA-Dni"; */
+"loh-tA-Dni.text" = "20.0 °C";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "utJ-JO-l6o"; */
+"utJ-JO-l6o.text" = "Subtitle";
